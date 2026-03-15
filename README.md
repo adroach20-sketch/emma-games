@@ -1,20 +1,37 @@
-# Emma's Word Games ✨
+# Emma's Word Games
 
 A browser-based reading and spelling game built for Emma (age 4-5). No apps to install — just open a browser.
 
-## What it does
+## Games
 
-- Emma picks an animal companion (Bunny, Puppy, Fox, or Froggy)
-- A picture clue appears — she taps letter tiles to spell the word
-- Letters speak their name when tapped; the full word is spoken aloud when complete
-- Celebration with confetti and her name after every correct word
-- Tap the emoji picture for a hint (hears the word)
-- 26 words across three difficulty tiers: 3-letter → 4-letter → 5-letter
-- Works on phone and computer; designed for touch-first
+| Game | What Emma does |
+|------|----------------|
+| **Word Builder** | Taps letter tiles to spell a word shown as an emoji clue |
+| **Sight Word Spotter** | Sees a flash card for 1.8 seconds, then identifies the word from 3 choices |
+| **Word Decoder** | Taps tiles one-by-one to flip and reveal each letter of a word |
+| **Sentence Builder** | Picks the missing word to complete a sentence |
+| **Word Families** | Taps all words that share the same ending sound (-at, -og, etc.) |
+| **Story Reader** | Reads a short story sentence by sentence with word highlighting, then answers a comprehension question |
+| **Typing Practice** | Types words on an on-screen keyboard, letter by letter |
+
+## Features
+
+- Pick an animal companion (Bunny, Puppy, Fox, Froggy)
+- Letters and words spoken aloud via Web Speech API
+- Phonics hint button in Word Builder ("Sound it out!") speaks each letter
+- Word Categories filter (Animals / Nature / Home / All) for Builder, Decoder, and Typing
+- 64 words across three difficulty tiers: 3-letter CVC, 4-letter, 5-letter
+- ~52 Dolch Pre-Primer + Primer sight words
+- 12 word family rime patterns
+- 6 illustrated short stories
+- Story Moments unlock every 5 words completed (across all games)
+- Sticker Book — earn an animal sticker after each story moment
+- Progress saved in localStorage
+- Mobile-first, 80px+ touch targets, works on iPhone home screen
 
 ## How to run locally
 
-Just open `index.html` in any browser. No server, no install, no dependencies.
+Open `index.html` in any browser. No server, no install, no dependencies.
 
 ## How to save to iPhone home screen (feels like an app)
 
@@ -23,11 +40,28 @@ Just open `index.html` in any browser. No server, no install, no dependencies.
 3. Tap "Add to Home Screen"
 4. Tap "Add"
 
-The game will appear as an app icon on her home screen.
+## Project structure
+
+```
+emma-games/
+├── index.html       — HTML screens and overlays (shell only)
+├── main.css         — all CSS
+├── data.js          — WORDS, SIGHT_WORDS, SENTENCES, WORD_FAMILIES, STORIES, constants
+├── core.js          — save/load, TTS, shared state, hub, story moments, stickers
+├── init.js          — page-load companion restore (runs last)
+└── games/
+    ├── builder.js   — Word Builder + category picker + phonics hint
+    ├── spotter.js   — Sight Word Spotter
+    ├── decoder.js   — Word Decoder
+    ├── sentence.js  — Sentence Builder
+    ├── families.js  — Word Families
+    ├── reader.js    — Story Reader
+    └── typing.js    — Typing Practice
+```
 
 ## Deployment (Render)
 
-This is a static site — one HTML file, nothing to build.
+This is a static site — nothing to build.
 
 1. Push this repo to GitHub
 2. Go to [render.com](https://render.com) → New → Static Site
@@ -37,22 +71,3 @@ This is a static site — one HTML file, nothing to build.
    - **Build Command:** *(leave blank)*
    - **Publish Directory:** `.`
 5. Deploy — Render gives you a free `*.onrender.com` URL
-
-## Word list
-
-Words are split into three tiers and played in order (easy first):
-
-| Tier | Words |
-|------|-------|
-| Easy (3-letter) | cat, dog, pig, bug, sun, hat, fox, hen, bat, cup, bed, nut |
-| Medium (4-letter) | frog, fish, duck, bird, crab, drum, ship, star, flag |
-| Hard (5-letter) | snail, shark, skunk, grape, plant |
-
-To add words: edit the `WORDS` array in `index.html`. Each entry needs `word` (string) and `emoji` (unambiguous emoji clue).
-
-## Roadmap
-
-- [ ] v2: Sight word flash cards (the, and, look, is, a...)
-- [ ] v2: Sticker reward collection after N words
-- [ ] v3: Typing mode (keyboard input) for computer skills practice
-- [ ] v3: More word categories (animals, food, colors)
