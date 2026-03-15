@@ -116,6 +116,8 @@ function goToHub() {
     clearTimeout(spotterState.timerTimeout);
     spotterState.timerTimeout = null;
   }
+  // Cancel any in-progress speech when returning to hub
+  window.speechSynthesis && window.speechSynthesis.cancel();
   // Save companion choice
   writeSave({ companion: state.companion.emoji, companionName: state.companion.name });
   refreshHubUI();
