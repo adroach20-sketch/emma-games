@@ -600,21 +600,63 @@
     };
 
     // =====================================================================
-    // AUDIO — Web Speech API
-    // speakWord: slower, child-friendly rate
-    // speakLetter: letter name only (TTS handles this reliably)
-    // speakPhrase: celebrations
+    // AUDIO — Web Speech API with best-voice selection
+    //
+    // Browsers expose multiple TTS voices. We pick the best available:
+    //   Google US English  (Chrome desktop — very clear)
+    //   Microsoft Neural voices (Edge/Windows — very clear)
+    //   Samantha / Karen   (iOS Safari / macOS — clear)
+    //   Any en-US voice    (fallback)
+    //   Any English voice  (last resort)
+    //
+    // Voices load asynchronously, so we listen for voiceschanged and also
+    // try immediately in case they're already cached (Chrome behaviour).
     // =====================================================================
+    let selectedVoice = null;
+
+    function loadBestVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices.length) return;
+
+      // Ordered preference list — first match wins
+      const tests = [
+        v => v.name === 'Google US English',
+        v => v.name.includes('Microsoft') && v.name.toLowerCase().includes('aria'),
+        v => v.name.includes('Microsoft') && v.name.toLowerCase().includes('jenny'),
+        v => v.name.includes('Microsoft') && v.name.toLowerCase().includes('guy'),
+        v => v.name.includes('Microsoft') && v.lang === 'en-US',
+        v => v.name === 'Samantha',
+        v => v.name === 'Karen',
+        v => v.name === 'Moira',
+        v => v.lang === 'en-US' && v.localService,
+        v => v.lang === 'en-US',
+        v => v.lang.startsWith('en'),
+      ];
+
+      for (const test of tests) {
+        const match = voices.find(test);
+        if (match) { selectedVoice = match; return; }
+      }
+
+      selectedVoice = voices[0]; // absolute fallback
+    }
+
+    if (window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = loadBestVoice;
+      loadBestVoice(); // works in Chrome where voices are synchronously available
+    }
+
     function speakWord(word) {
-      speak(word, 0.72, 1.1);
+      // Slower rate so every syllable is clear for a young listener
+      speak(word, 0.65, 1.05);
     }
 
     function speakLetter(letter) {
-      speak(letter, 1.0, 1.2);
+      speak(letter, 0.9, 1.1);
     }
 
     function speakPhrase(phrase) {
-      speak(phrase, 0.82, 1.15);
+      speak(phrase, 0.78, 1.1);
     }
 
     function speak(text, rate, pitch) {
@@ -624,6 +666,7 @@
       utt.rate   = rate;
       utt.pitch  = pitch;
       utt.volume = 1;
+      if (selectedVoice) utt.voice = selectedVoice;
       window.speechSynthesis.speak(utt);
     }
 
