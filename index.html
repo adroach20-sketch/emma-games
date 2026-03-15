@@ -1036,7 +1036,9 @@
     // =====================================================================
 
     // Word Builder words — easy → medium → hard
+    // Sorted by length; within each tier words are shuffled at runtime.
     const WORDS = [
+      // ── Easy: 3-letter CVC ──────────────────────────────────────────────
       { word: 'cat',   emoji: '🐱' },
       { word: 'dog',   emoji: '🐶' },
       { word: 'pig',   emoji: '🐷' },
@@ -1049,6 +1051,17 @@
       { word: 'cup',   emoji: '🥤' },
       { word: 'bed',   emoji: '🛏️' },
       { word: 'nut',   emoji: '🥜' },
+      { word: 'rat',   emoji: '🐀' },
+      { word: 'van',   emoji: '🚐' },
+      { word: 'log',   emoji: '🪵' },
+      { word: 'ram',   emoji: '🐏' },
+      { word: 'web',   emoji: '🕸️' },
+      { word: 'pup',   emoji: '🐕' },
+      { word: 'tub',   emoji: '🛁' },
+      { word: 'jug',   emoji: '🏺' },
+      { word: 'map',   emoji: '🗺️' },
+      { word: 'top',   emoji: '🪀' },
+      // ── Medium: 4-letter words ───────────────────────────────────────────
       { word: 'frog',  emoji: '🐸' },
       { word: 'fish',  emoji: '🐟' },
       { word: 'duck',  emoji: '🦆' },
@@ -1058,11 +1071,40 @@
       { word: 'ship',  emoji: '🚢' },
       { word: 'star',  emoji: '⭐' },
       { word: 'flag',  emoji: '🚩' },
+      { word: 'bear',  emoji: '🐻' },
+      { word: 'deer',  emoji: '🦌' },
+      { word: 'wolf',  emoji: '🐺' },
+      { word: 'lamb',  emoji: '🐑' },
+      { word: 'worm',  emoji: '🪱' },
+      { word: 'swan',  emoji: '🦢' },
+      { word: 'seal',  emoji: '🦭' },
+      { word: 'cake',  emoji: '🎂' },
+      { word: 'bike',  emoji: '🚲' },
+      { word: 'kite',  emoji: '🪁' },
+      { word: 'bone',  emoji: '🦴' },
+      { word: 'milk',  emoji: '🥛' },
+      { word: 'moon',  emoji: '🌙' },
+      { word: 'rain',  emoji: '🌧️' },
+      { word: 'mice',  emoji: '🐭' },
+      // ── Hard: 5-letter words (blends, clusters, CVCE) ───────────────────
       { word: 'snail', emoji: '🐌' },
       { word: 'shark', emoji: '🦈' },
       { word: 'skunk', emoji: '🦨' },
       { word: 'grape', emoji: '🍇' },
       { word: 'plant', emoji: '🪴' },
+      { word: 'tiger', emoji: '🐯' },
+      { word: 'horse', emoji: '🐎' },
+      { word: 'koala', emoji: '🐨' },
+      { word: 'panda', emoji: '🐼' },
+      { word: 'zebra', emoji: '🦓' },
+      { word: 'llama', emoji: '🦙' },
+      { word: 'sloth', emoji: '🦥' },
+      { word: 'otter', emoji: '🦦' },
+      { word: 'moose', emoji: '🫎' },
+      { word: 'train', emoji: '🚂' },
+      { word: 'truck', emoji: '🚛' },
+      { word: 'tulip', emoji: '🌷' },
+      { word: 'toast', emoji: '🍞' },
     ];
 
     // 20 Dolch Pre-Primer sight words
