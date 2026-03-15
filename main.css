@@ -1048,3 +1048,333 @@ body {
 
 .sentence-next-btn.show { display: block; animation: popIn 0.4s ease; }
 .sentence-next-btn:active { transform: scale(0.96); }
+
+/* ===================== PHONICS HINT BUTTON ===================== */
+.phonics-hint-btn {
+  background: var(--primary-light);
+  border: 2px solid var(--tile-border);
+  border-radius: 14px;
+  padding: 10px 22px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary);
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: transform 0.12s ease;
+  min-height: 48px;
+}
+.phonics-hint-btn:active { transform: scale(0.95); }
+
+/* ===================== CATEGORY PICKER OVERLAY ===================== */
+.category-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  z-index: 120;
+  padding: 28px 24px;
+}
+
+.category-overlay.show {
+  display: flex;
+}
+
+.category-overlay-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.category-btn {
+  width: 100%;
+  max-width: 360px;
+  background: white;
+  border: 3px solid var(--tile-border);
+  border-radius: 20px;
+  padding: 22px 20px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  min-height: 80px;
+  text-align: center;
+}
+
+.category-btn:active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  transform: scale(0.97);
+}
+
+/* ===================== WORD FAMILIES ===================== */
+.family-rime-display {
+  font-size: clamp(3rem, 14vw, 5rem);
+  font-weight: 900;
+  color: var(--primary);
+  text-align: center;
+  margin: 8px 0 12px;
+  animation: clueIn 0.4s ease;
+}
+
+.family-instruction {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.family-tiles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.family-tile-btn {
+  min-width: 82px;
+  min-height: 82px;
+  background: white;
+  border: 3px solid var(--tile-border);
+  border-radius: 18px;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  padding: 8px 12px;
+}
+
+.family-tile-btn:active { transform: scale(0.92); }
+
+.family-tile-btn.correct-family {
+  background: #d1fae5;
+  border-color: var(--success);
+  color: var(--success);
+  pointer-events: none;
+  animation: slotFill 0.25s ease;
+}
+
+.family-tile-btn.wrong-family {
+  animation: cardShake 0.4s ease;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.family-next-btn {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 18px;
+  animation: popIn 0.4s ease;
+  transition: transform 0.12s ease;
+  min-height: 80px;
+}
+.family-next-btn:active { transform: scale(0.96); }
+
+/* ===================== STORY READER ===================== */
+.reader-story-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.reader-scene {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 14px;
+  animation: clueIn 0.4s ease;
+}
+
+.reader-sentence-box {
+  background: white;
+  border: 3px solid var(--tile-border);
+  border-radius: 22px;
+  padding: 22px 20px;
+  width: 100%;
+  min-height: 90px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 20px;
+  animation: clueIn 0.3s ease;
+  line-height: 1.6;
+}
+
+.reader-word-span {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 2px 4px;
+  transition: all 0.2s ease;
+}
+
+.reader-word-span.reader-lit {
+  background: #fbbf24;
+  color: #1f2937;
+  transform: scale(1.08);
+}
+
+.reader-question {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text);
+  text-align: center;
+  padding: 8px 0;
+  width: 100%;
+}
+
+.reader-choice-btn {
+  width: 100%;
+  background: white;
+  border: 3px solid var(--tile-border);
+  border-radius: 20px;
+  padding: 20px 16px;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  min-height: 80px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.reader-choice-btn:active { transform: scale(0.97); }
+
+.reader-choice-btn.reader-correct {
+  background: #d1fae5;
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.reader-choice-btn.reader-wrong {
+  animation: cardShake 0.4s ease;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.reader-next-btn {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  animation: popIn 0.4s ease;
+  transition: transform 0.12s ease;
+  min-height: 80px;
+}
+.reader-next-btn:active { transform: scale(0.96); }
+
+/* ===================== TYPING PRACTICE ===================== */
+.typing-display {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  width: 100%;
+}
+
+.typing-cell {
+  width: 64px;
+  height: 72px;
+  background: var(--slot-empty);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: var(--text);
+  border: 3px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.typing-cell.sm {
+  width: 54px;
+  height: 62px;
+  font-size: 1.75rem;
+  border-radius: 13px;
+}
+
+.typing-cell.typing-active {
+  border-color: var(--slot-active-border);
+  background: var(--slot-active-bg);
+  animation: slotPulse 1.3s ease infinite;
+}
+
+.typing-cell.typing-filled {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  animation: slotFill 0.25s ease;
+}
+
+.typing-cell.typing-correct {
+  background: #d1fae5;
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.keyboard-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.keyboard-key {
+  flex: 1;
+  max-width: 44px;
+  min-height: 52px;
+  background: white;
+  border: 2px solid var(--tile-border);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.keyboard-key:active {
+  transform: scale(0.88);
+  background: var(--primary-light);
+}
+
+.keyboard-key.keyboard-wrong {
+  border-color: var(--danger);
+  color: var(--danger);
+  animation: tileWrong 0.35s ease;
+}

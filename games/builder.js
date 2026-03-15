@@ -3,18 +3,46 @@
 // Depends on: data.js, core.js
 // =====================================================================
 
-function startWordBuilder() {
-  const easy   = shuffle(WORDS.filter(w => w.word.length === 3));
-  const medium = shuffle(WORDS.filter(w => w.word.length === 4));
-  const hard   = shuffle(WORDS.filter(w => w.word.length >= 5));
+// ── CATEGORY PICKER ──────────────────────────────────────────────────
+// _categoryPickerGame: 'builder' | 'decoder' | 'typing'
+let _categoryPickerGame = 'builder';
+
+function showCategoryPicker(gameType) {
+  _categoryPickerGame = gameType;
+  document.getElementById('category-overlay').classList.add('show');
+}
+
+function startWithCategory(category) {
+  document.getElementById('category-overlay').classList.remove('show');
+  writeSave({ lastCategory: category });
+  if (_categoryPickerGame === 'builder') {
+    startWordBuilder(category);
+  } else if (_categoryPickerGame === 'decoder') {
+    startDecoder(category);
+  } else if (_categoryPickerGame === 'typing') {
+    startTyping(category);
+  }
+}
+
+// ── WORD BUILDER ─────────────────────────────────────────────────────
+
+// category: 'all' | 'animal' | 'nature' | 'home'
+function startWordBuilder(category) {
+  category = category || 'all';
+  const pool = category === 'all' ? WORDS : WORDS.filter(w => w.category === category);
+  const easy   = shuffle(pool.filter(w => w.word.length === 3));
+  const medium = shuffle(pool.filter(w => w.word.length === 4));
+  const hard   = shuffle(pool.filter(w => w.word.length >= 5));
   state.wordList = [...easy, ...medium, ...hard];
+  // Fallback: if category yields no words use full set
+  if (state.wordList.length === 0) state.wordList = shuffle([...WORDS]);
   state.currentIndex = 0;
   state.score = 0;
   state.roundComplete = false;
   state.pendingStoryMoment = false;
   state.activeGame = 'builder';
 
-  document.getElementById('mascot').textContent = state.companion.emoji;
+  document.getElementById('mascot').textContent = state.companion.emoji || loadSave().companion || '🐰';
   showScreen('game-screen');
   loadWord();
 }
@@ -121,6 +149,17 @@ function hintTap() {
   if (state.currentWord) speakWord(state.currentWord.word);
 }
 
+// Phonics hint — speaks each letter of the current word with 450ms gaps
+function phonicsHintTap() {
+  if (!state.currentWord) return;
+  if (state.isAnimating) return;
+  const letters = state.currentWord.word.split('');
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  letters.forEach((letter, i) => {
+    setTimeout(() => speakLetter(letter), i * 450);
+  });
+}
+
 function wordComplete() {
   state.isAnimating = true;
   state.score++;
@@ -149,6 +188,7 @@ function showCelebration() {
   // Update next button label based on whether story is pending
   const btn = document.getElementById('celebrate-next-btn');
   btn.textContent = state.pendingStoryMoment ? 'Story Time! 📖' : 'Next Word ➜';
+  btn.onclick = celebrateNextClicked;
 
   document.getElementById('celebrate-overlay').classList.add('show');
   triggerMascot('happy');

@@ -13,9 +13,13 @@ const DEFAULT_SAVE = {
   totalSightWords: 0,
   totalDecoded: 0,
   totalSentences: 0,
+  totalFamilies: 0,
+  totalStoriesRead: 0,
+  totalTyped: 0,
   stickersEarned: [],
   storyMomentIndex: 0,
   sightWordsLearned: [],
+  lastCategory: 'all',
 };
 
 function loadSave() {
@@ -94,7 +98,7 @@ const state = {
   isAnimating:  false,
   roundComplete: false,
   pendingStoryMoment: false,
-  // Which game is active: 'builder' | 'spotter' | 'decoder' | 'sentence'
+  // Which game is active: 'builder'|'spotter'|'decoder'|'sentence'|'families'|'reader'|'typing'
   activeGame: 'builder',
 };
 
@@ -129,6 +133,12 @@ function refreshHubUI() {
   document.getElementById('hub-dc-sub').textContent = `${dc} word${dc !== 1 ? 's' : ''} decoded`;
   const sb = save.totalSentences || 0;
   document.getElementById('hub-sb-sub').textContent = `${sb} sentence${sb !== 1 ? 's' : ''} built`;
+  const fam = save.totalFamilies || 0;
+  document.getElementById('hub-fam-sub').textContent = `${fam} famil${fam !== 1 ? 'ies' : 'y'} completed`;
+  const rdr = save.totalStoriesRead || 0;
+  document.getElementById('hub-rdr-sub').textContent = `${rdr} stor${rdr !== 1 ? 'ies' : 'y'} read`;
+  const typ = save.totalTyped || 0;
+  document.getElementById('hub-typ-sub').textContent = `${typ} word${typ !== 1 ? 's' : ''} typed`;
   document.getElementById('hub-stk-sub').textContent = `${save.stickersEarned.length} / 30 stickers`;
 }
 
@@ -147,10 +157,26 @@ function showAllDone(game) {
     scoreNum = decoderState.score;
     label = 'words decoded!';
     sub = `You decoded ${scoreNum} words!`;
-  } else {
+  } else if (game === 'sentence') {
     scoreNum = sentenceState.score;
     label = 'sentences built!';
     sub = `You built ${scoreNum} sentences!`;
+  } else if (game === 'families') {
+    scoreNum = familyState.score;
+    label = 'word families!';
+    sub = `You found ${scoreNum} word families!`;
+  } else if (game === 'reader') {
+    scoreNum = readerState.score;
+    label = 'stories read!';
+    sub = `You read ${scoreNum} stories!`;
+  } else if (game === 'typing') {
+    scoreNum = typingState.score;
+    label = 'words typed!';
+    sub = `You typed ${scoreNum} words!`;
+  } else {
+    scoreNum = 0;
+    label = '';
+    sub = 'Great job, Emma!';
   }
 
   document.getElementById('done-score').textContent = scoreNum;
@@ -173,7 +199,7 @@ let storyAutoPlayTimeout = null;
 
 function checkMilestones() {
   const save = loadSave();
-  const total = save.totalWordsSpelled + save.totalSightWords + (save.totalDecoded || 0) + (save.totalSentences || 0);
+  const total = save.totalWordsSpelled + save.totalSightWords + (save.totalDecoded || 0) + (save.totalSentences || 0) + (save.totalFamilies || 0) + (save.totalStoriesRead || 0) + (save.totalTyped || 0);
   const storyDue = Math.floor(total / 5) > save.storyMomentIndex && save.storyMomentIndex < STORY_MOMENTS.length;
 
   if (storyDue) {
@@ -186,6 +212,12 @@ function checkMilestones() {
       decoderState.pendingStoryMoment = true;
     } else if (state.activeGame === 'sentence') {
       sentenceState.pendingStoryMoment = true;
+    } else if (state.activeGame === 'families') {
+      familyState.pendingStoryMoment = true;
+    } else if (state.activeGame === 'reader') {
+      readerState.pendingStoryMoment = true;
+    } else if (state.activeGame === 'typing') {
+      typingState.pendingStoryMoment = true;
     }
   }
 }
@@ -292,6 +324,12 @@ function resumeAfterStory() {
     loadDecoderWord();
   } else if (state.activeGame === 'sentence') {
     loadSentence();
+  } else if (state.activeGame === 'families') {
+    loadFamilyRound();
+  } else if (state.activeGame === 'reader') {
+    loadReaderStory();
+  } else if (state.activeGame === 'typing') {
+    loadTypingWord();
   }
 }
 

@@ -12,11 +12,15 @@ const decoderState = {
   pendingStoryMoment: false,
 };
 
-function startDecoder() {
-  const easy   = shuffle(WORDS.filter(w => w.word.length === 3));
-  const medium = shuffle(WORDS.filter(w => w.word.length === 4));
-  const hard   = shuffle(WORDS.filter(w => w.word.length >= 5));
+// category: 'all' | 'animal' | 'nature' | 'home'
+function startDecoder(category) {
+  category = category || 'all';
+  const pool = category === 'all' ? WORDS : WORDS.filter(w => w.category === category);
+  const easy   = shuffle(pool.filter(w => w.word.length === 3));
+  const medium = shuffle(pool.filter(w => w.word.length === 4));
+  const hard   = shuffle(pool.filter(w => w.word.length >= 5));
   decoderState.wordList = [...easy, ...medium, ...hard];
+  if (decoderState.wordList.length === 0) decoderState.wordList = shuffle([...WORDS]);
   decoderState.currentIndex = 0;
   decoderState.score = 0;
   decoderState.pendingStoryMoment = false;
