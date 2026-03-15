@@ -1204,6 +1204,11 @@
     }
 
     function goToHub() {
+      // Clear any pending spotter timer so it doesn't fire after navigation
+      if (spotterState.timerTimeout) {
+        clearTimeout(spotterState.timerTimeout);
+        spotterState.timerTimeout = null;
+      }
       // Save companion choice
       writeSave({ companion: state.companion.emoji, companionName: state.companion.name });
       refreshHubUI();
@@ -1384,6 +1389,8 @@
 
     // Called when the "Next Word" / "Story Time" button is tapped on the celebrate overlay
     function celebrateNextClicked() {
+      if (state.isAnimating === false) return; // guard against double-tap
+      state.isAnimating = false;
       document.getElementById('celebrate-overlay').classList.remove('show');
       state.currentIndex++;
       // loadWord will check pendingStoryMoment before loading the next word
@@ -1555,6 +1562,7 @@
     // storyResumeCallback is called after the story overlay closes, to
     // resume whichever game was in progress
     let storyResumeCallback = null;
+    let storyAutoPlayTimeout = null;
 
     function checkMilestones() {
       const save = loadSave();
@@ -1606,7 +1614,8 @@
       document.getElementById('story-overlay').classList.add('show');
 
       // Auto-play the sentence after a short delay
-      setTimeout(() => playStorySentence(), 700);
+      // Store the timeout so closeStoryMoment can cancel it if user taps "Keep playing" quickly
+      storyAutoPlayTimeout = setTimeout(() => playStorySentence(), 700);
     }
 
     function playStorySentence() {
@@ -1641,6 +1650,12 @@
     }
 
     function closeStoryMoment() {
+      // Cancel auto-play if user taps "Keep playing" before the 700ms fires
+      if (storyAutoPlayTimeout) {
+        clearTimeout(storyAutoPlayTimeout);
+        storyAutoPlayTimeout = null;
+      }
+      window.speechSynthesis && window.speechSynthesis.cancel();
       document.getElementById('story-overlay').classList.remove('show');
 
       // Award a sticker after story
