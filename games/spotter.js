@@ -71,19 +71,23 @@ function showSpotterFlash(word) {
   // Speak word immediately
   speakWord(word);
 
-  // Start timer bar — drains over 1800ms
+  // Adaptive flash duration: 3000ms for new words, 1500ms for already-known words
+  const save = loadSave();
+  const flashDuration = save.sightWordsLearned.includes(word) ? 1500 : 3000;
+
+  // Start timer bar — drains over flashDuration ms
   const timerBar = document.getElementById('spotter-timer-bar');
   timerBar.style.transition = 'none';
   timerBar.style.width = '100%';
   void timerBar.offsetWidth; // force reflow
-  timerBar.style.transition = 'width 1.8s linear';
+  timerBar.style.transition = 'width ' + flashDuration + 'ms linear';
   timerBar.style.width = '0%';
 
-  // After 1800ms, move to choose phase
+  // After flashDuration ms, move to choose phase
   if (spotterState.timerTimeout) clearTimeout(spotterState.timerTimeout);
   spotterState.timerTimeout = setTimeout(() => {
     showSpotterChoose();
-  }, 1800);
+  }, flashDuration);
 }
 
 function showSpotterChoose() {

@@ -14,9 +14,12 @@ const typingState = {
   pendingStoryMoment: false,
 };
 
-// category: 'all' | 'animal' | 'nature' | 'home' (optional — defaults to 'all')
+// category: 'all' | 'animal' | 'nature' | 'home' (optional — uses lastCategory from save)
 function startTyping(category) {
-  category = category || 'all';
+  if (!category) {
+    const save = loadSave();
+    category = save.lastCategory || 'all';
+  }
   const pool = category === 'all' ? WORDS : WORDS.filter(w => w.category === category);
   startTypingWithWords(pool);
 }

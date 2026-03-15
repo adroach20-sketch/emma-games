@@ -12,9 +12,12 @@ const decoderState = {
   pendingStoryMoment: false,
 };
 
-// category: 'all' | 'animal' | 'nature' | 'home'
+// category: 'all' | 'animal' | 'nature' | 'home' (optional — uses lastCategory from save)
 function startDecoder(category) {
-  category = category || 'all';
+  if (!category) {
+    const save = loadSave();
+    category = save.lastCategory || 'all';
+  }
   const pool = category === 'all' ? WORDS : WORDS.filter(w => w.category === category);
   const easy   = shuffle(pool.filter(w => w.word.length === 3));
   const medium = shuffle(pool.filter(w => w.word.length === 4));

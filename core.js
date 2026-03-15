@@ -350,16 +350,33 @@ function renderStickerGrid() {
   const grid = document.getElementById('sticker-grid');
   grid.innerHTML = '';
 
+  let firstLockedMarked = false;
   STICKERS.forEach((emoji, i) => {
     const slot = document.createElement('div');
     const isEarned = earned.includes(emoji);
-    slot.className = 'sticker-slot' + (isEarned ? ' earned' : ' locked');
+    let className = 'sticker-slot' + (isEarned ? ' earned' : ' locked');
+    // Mark the first locked slot as next-up
+    if (!isEarned && !firstLockedMarked) {
+      className += ' next-up';
+      firstLockedMarked = true;
+    }
+    slot.className = className;
     slot.textContent = emoji;
     if (isEarned) {
       slot.onclick = () => speakWord(STICKER_NAMES[i]);
     }
     grid.appendChild(slot);
   });
+
+  // Update the next sticker hint label
+  const labelEl = document.getElementById('sticker-next-label');
+  if (labelEl) {
+    if (earned.length >= STICKERS.length) {
+      labelEl.textContent = 'You collected all 30 stickers! Amazing Emma! 🏆';
+    } else {
+      labelEl.textContent = 'Play more games to earn your next sticker! ⭐';
+    }
+  }
 }
 
 function showStickerAward(emoji, name) {
@@ -425,6 +442,10 @@ function shuffle(arr) {
 
 // ── PARENT SETTINGS ───────────────────────────────────────────────────
 
+// Gear icon tap counter — requires 4 taps within 2 seconds to open settings
+let _gearTapCount = 0;
+let _gearTapTimer = null;
+
 // Maps each game key to the save fields it owns
 const GAME_RESET_MAP = {
   builder:  { totalWordsSpelled: 0 },
@@ -445,9 +466,39 @@ const GAME_RESET_MAP = {
 let _armedResetBtn = null; // tracks which button is in "armed" state
 
 function showParentSettings() {
-  // Disarm any previously armed button
-  _disarmReset();
-  document.getElementById('parent-overlay').classList.add('show');
+  _gearTapCount++;
+  const gearBtn = document.querySelector('.hub-settings-btn');
+  if (gearBtn) {
+    gearBtn.classList.add('tapping');
+    setTimeout(() => gearBtn.classList.remove('tapping'), 300);
+  }
+  if (_gearTapTimer) clearTimeout(_gearTapTimer);
+  _gearTapTimer = setTimeout(() => { _gearTapCount = 0; }, 2000);
+  if (_gearTapCount >= 4) {
+    _gearTapCount = 0;
+    clearTimeout(_gearTapTimer);
+    _disarmReset();
+    _refreshParentCategoryUI();
+    document.getElementById('parent-overlay').classList.add('show');
+  }
+}
+
+function setParentCategory(cat) {
+  writeSave({ lastCategory: cat });
+  _refreshParentCategoryUI();
+  closeParentSettings();
+}
+
+function _refreshParentCategoryUI() {
+  const save = loadSave();
+  const active = save.lastCategory || 'all';
+  ['animal','nature','home','all'].forEach(c => {
+    const btn = document.getElementById('pcat-' + c);
+    if (!btn) return;
+    btn.style.background = c === active ? 'rgba(124,58,237,0.4)' : 'rgba(255,255,255,0.1)';
+    btn.style.borderColor = c === active ? '#a78bfa' : 'rgba(255,255,255,0.2)';
+    btn.style.color = c === active ? '#e9d5ff' : 'rgba(255,255,255,0.7)';
+  });
 }
 
 function closeParentSettings() {

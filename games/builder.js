@@ -26,9 +26,12 @@ function startWithCategory(category) {
 
 // ── WORD BUILDER ─────────────────────────────────────────────────────
 
-// category: 'all' | 'animal' | 'nature' | 'home'
+// category: 'all' | 'animal' | 'nature' | 'home' (optional — uses lastCategory from save)
 function startWordBuilder(category) {
-  category = category || 'all';
+  if (!category) {
+    const save = loadSave();
+    category = save.lastCategory || 'all';
+  }
   const pool = category === 'all' ? WORDS : WORDS.filter(w => w.category === category);
   const easy   = shuffle(pool.filter(w => w.word.length === 3));
   const medium = shuffle(pool.filter(w => w.word.length === 4));
@@ -40,6 +43,8 @@ function startWordBuilder(category) {
   state.score = 0;
   state.roundComplete = false;
   state.pendingStoryMoment = false;
+  state.firstTryStreak = 0;
+  state.currentWordHadWrongTap = false;
   state.activeGame = 'builder';
 
   document.getElementById('mascot').textContent = state.companion.emoji || loadSave().companion || '🐰';
@@ -63,6 +68,7 @@ function loadWord() {
   state.currentWord  = state.wordList[state.currentIndex];
   state.activeSlot   = 0;
   state.isAnimating  = false;
+  state.currentWordHadWrongTap = false;
 
   const pct = (state.currentIndex / state.wordList.length) * 100;
   document.getElementById('progress-fill').style.width = pct + '%';
@@ -139,6 +145,7 @@ function handleTileTap(tileEl, letter) {
       wordComplete();
     }
   } else {
+    state.currentWordHadWrongTap = true;
     tileEl.classList.add('wrong');
     triggerMascot('wrong');
     setTimeout(() => tileEl.classList.remove('wrong'), 380);
@@ -168,6 +175,13 @@ function wordComplete() {
   const save = loadSave();
   writeSave({ totalWordsSpelled: save.totalWordsSpelled + 1 });
 
+  // Update first-try streak
+  if (!state.currentWordHadWrongTap) {
+    state.firstTryStreak = (state.firstTryStreak || 0) + 1;
+  } else {
+    state.firstTryStreak = 0;
+  }
+
   triggerMascot('happy');
 
   // Check if a story moment should be queued (checks AFTER this word is counted)
@@ -184,6 +198,18 @@ function showCelebration() {
   document.getElementById('celebrate-word').textContent  = state.currentWord.word + '!';
   document.getElementById('celebrate-name').textContent  = 'Emma got it! ⭐';
   document.getElementById('score-badge').textContent = `⭐ ${state.score}`;
+
+  // Show streak badge if 3+ in a row
+  const streakEl = document.getElementById('celebrate-streak');
+  if (streakEl) {
+    if ((state.firstTryStreak || 0) >= 3) {
+      streakEl.textContent = `🔥 ${state.firstTryStreak} in a row!`;
+      streakEl.style.display = 'block';
+    } else {
+      streakEl.textContent = '';
+      streakEl.style.display = 'none';
+    }
+  }
 
   // Update next button label based on whether story is pending
   const btn = document.getElementById('celebrate-next-btn');

@@ -57,7 +57,7 @@
     <button class="hub-settings-btn" onclick="showParentSettings()" title="Parent Settings">⚙️</button>
     <div class="hub-greeting" id="hub-greeting">Hi Emma! 👋</div>
 
-    <button class="hub-game-btn" onclick="showCategoryPicker('builder')">
+    <button class="hub-game-btn" onclick="startWordBuilder()">
       <div class="hub-game-btn-title">Word Builder 🔤</div>
       <div class="hub-game-btn-sub" id="hub-wb-sub">0 words spelled</div>
     </button>
@@ -67,7 +67,7 @@
       <div class="hub-game-btn-sub" id="hub-sw-sub">0 words learned</div>
     </button>
 
-    <button class="hub-game-btn" onclick="showCategoryPicker('decoder')">
+    <button class="hub-game-btn" onclick="startDecoder()">
       <div class="hub-game-btn-title">Word Decoder 🔍</div>
       <div class="hub-game-btn-sub" id="hub-dc-sub">0 words decoded</div>
     </button>
@@ -87,7 +87,7 @@
       <div class="hub-game-btn-sub" id="hub-rdr-sub">0 stories read</div>
     </button>
 
-    <button class="hub-game-btn" onclick="showCategoryPicker('typing')">
+    <button class="hub-game-btn" onclick="startTyping()">
       <div class="hub-game-btn-title">Typing Practice ⌨️</div>
       <div class="hub-game-btn-sub" id="hub-typ-sub">0 words typed</div>
     </button>
@@ -156,6 +156,7 @@
     <div class="sticker-title">Emma's Stickers ⭐</div>
     <div class="sticker-count" id="sticker-count-label">0 / 30 stickers</div>
     <div class="sticker-grid" id="sticker-grid"></div>
+    <div class="sticker-next-label" id="sticker-next-label"></div>
   </div>
 
   <!-- ===== ALL DONE SCREEN ===== -->
@@ -172,6 +173,7 @@
   <div class="celebrate-overlay" id="celebrate-overlay">
     <div class="celebrate-emoji" id="celebrate-emoji"></div>
     <div class="celebrate-word"  id="celebrate-word"></div>
+    <div class="celebrate-streak" id="celebrate-streak"></div>
     <div class="celebrate-name"  id="celebrate-name"></div>
     <button class="next-btn" id="celebrate-next-btn" onclick="celebrateNextClicked()">Next Word ➜</button>
   </div>
@@ -294,7 +296,7 @@
   <div class="parent-overlay" id="parent-overlay">
     <div class="parent-overlay-inner">
       <div class="parent-title">⚙️ Parent Settings</div>
-      <div class="parent-subtitle">Tap a button once to arm it, then tap again to confirm.</div>
+      <div class="parent-subtitle">Tap ⚙️ four times to open these settings. Tap a reset button once to arm it, then again to confirm.</div>
 
       <div class="parent-game-list">
         <div class="parent-game-row">
@@ -325,6 +327,16 @@
           <span class="parent-game-label">Typing Practice ⌨️</span>
           <button class="parent-reset-btn" onclick="resetGame(this,'typing')">Reset</button>
         </div>
+      </div>
+
+      <div class="parent-divider"></div>
+
+      <div class="parent-game-label" style="color:rgba(255,255,255,0.8);font-size:0.95rem;font-weight:700;margin-bottom:4px;">Word Category</div>
+      <div class="parent-category-row">
+        <button class="parent-cat-btn" id="pcat-animal" onclick="setParentCategory('animal')">🐾 Animals</button>
+        <button class="parent-cat-btn" id="pcat-nature" onclick="setParentCategory('nature')">🌿 Nature</button>
+        <button class="parent-cat-btn" id="pcat-home"   onclick="setParentCategory('home')">🏠 Home</button>
+        <button class="parent-cat-btn" id="pcat-all"    onclick="setParentCategory('all')">🎲 All</button>
       </div>
 
       <div class="parent-divider"></div>
