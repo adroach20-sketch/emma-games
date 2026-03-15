@@ -1378,3 +1378,156 @@ body {
   color: var(--danger);
   animation: tileWrong 0.35s ease;
 }
+
+/* ===================== PARENT SETTINGS ===================== */
+.hub-settings-btn {
+  position: absolute;
+  top: 28px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  opacity: 0.35;
+  padding: 8px;
+  border-radius: 50%;
+  transition: opacity 0.15s ease;
+  line-height: 1;
+}
+
+.hub-settings-btn:active { opacity: 0.7; }
+
+/* hub-screen needs position:relative for the absolute gear btn */
+#hub-screen { position: relative; }
+
+.parent-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 5, 25, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  padding: 20px;
+}
+
+.parent-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.parent-overlay-inner {
+  background: #1e1040;
+  border: 2px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 28px 24px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.parent-title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: white;
+  text-align: center;
+}
+
+.parent-subtitle {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.parent-game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.parent-game-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.parent-game-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  flex: 1;
+}
+
+.parent-reset-btn {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.parent-reset-btn:active { transform: scale(0.95); }
+
+.parent-reset-btn.armed {
+  background: rgba(239,68,68,0.2);
+  border-color: var(--danger);
+  color: #fca5a5;
+}
+
+.parent-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin: 4px 0;
+}
+
+.parent-reset-all-btn {
+  background: rgba(239,68,68,0.15);
+  color: #fca5a5;
+  border: 1.5px solid rgba(239,68,68,0.4);
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.parent-reset-all-btn:active { transform: scale(0.97); }
+
+.parent-reset-all-btn.armed {
+  background: rgba(239,68,68,0.4);
+  border-color: var(--danger);
+  color: white;
+}
+
+.parent-close-btn {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.parent-close-btn:active { transform: scale(0.97); }

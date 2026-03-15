@@ -423,6 +423,79 @@ function shuffle(arr) {
   return a;
 }
 
+// ── PARENT SETTINGS ───────────────────────────────────────────────────
+
+// Maps each game key to the save fields it owns
+const GAME_RESET_MAP = {
+  builder:  { totalWordsSpelled: 0 },
+  spotter:  { totalSightWords: 0, sightWordsLearned: [] },
+  decoder:  { totalDecoded: 0 },
+  sentence: { totalSentences: 0 },
+  families: { totalFamilies: 0 },
+  reader:   { totalStoriesRead: 0 },
+  typing:   { totalTyped: 0 },
+  all: {
+    totalWordsSpelled: 0, totalSightWords: 0, totalDecoded: 0,
+    totalSentences: 0, totalFamilies: 0, totalStoriesRead: 0, totalTyped: 0,
+    stickersEarned: [], storyMomentIndex: 0, sightWordsLearned: [],
+    companion: '', companionName: '',
+  },
+};
+
+let _armedResetBtn = null; // tracks which button is in "armed" state
+
+function showParentSettings() {
+  // Disarm any previously armed button
+  _disarmReset();
+  document.getElementById('parent-overlay').classList.add('show');
+}
+
+function closeParentSettings() {
+  _disarmReset();
+  document.getElementById('parent-overlay').classList.remove('show');
+}
+
+function resetGame(btn, game) {
+  if (_armedResetBtn === btn) {
+    // Second tap — execute the reset
+    writeSave(GAME_RESET_MAP[game]);
+    _disarmReset();
+    refreshHubUI();
+    // Visual confirmation: flash button green briefly
+    btn.textContent = 'Done ✓';
+    btn.style.background = 'rgba(16,185,129,0.3)';
+    btn.style.color = '#6ee7b7';
+    btn.style.borderColor = 'var(--success)';
+    setTimeout(() => {
+      btn.textContent = game === 'all' ? 'Reset All Progress' : 'Reset';
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+      // If "all" was reset, close and go back to welcome screen
+      if (game === 'all') {
+        closeParentSettings();
+        showScreen('welcome-screen');
+      }
+    }, 1200);
+  } else {
+    // First tap — arm it
+    _disarmReset();
+    _armedResetBtn = btn;
+    btn.classList.add('armed');
+    btn.textContent = 'Confirm?';
+  }
+}
+
+function _disarmReset() {
+  if (_armedResetBtn) {
+    _armedResetBtn.classList.remove('armed');
+    _armedResetBtn.textContent = _armedResetBtn.classList.contains('parent-reset-all-btn')
+      ? 'Reset All Progress'
+      : 'Reset';
+    _armedResetBtn = null;
+  }
+}
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('done-screen').classList.remove('active');

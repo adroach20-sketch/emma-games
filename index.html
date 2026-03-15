@@ -54,6 +54,7 @@
       <div class="hub-companion" id="hub-companion"></div>
       <button class="hub-sticker-badge" id="hub-sticker-badge" onclick="goToStickers()">⭐ 0 stickers</button>
     </div>
+    <button class="hub-settings-btn" onclick="showParentSettings()" title="Parent Settings">⚙️</button>
     <div class="hub-greeting" id="hub-greeting">Hi Emma! 👋</div>
 
     <button class="hub-game-btn" onclick="showCategoryPicker('builder')">
@@ -288,6 +289,50 @@
     <button class="sentence-next-btn" id="sentence-next-btn" onclick="sentenceNextClicked()">Next Sentence ➜</button>
   </div>
 
+
+  <!-- ===== PARENT SETTINGS OVERLAY ===== -->
+  <div class="parent-overlay" id="parent-overlay">
+    <div class="parent-overlay-inner">
+      <div class="parent-title">⚙️ Parent Settings</div>
+      <div class="parent-subtitle">Tap a button once to arm it, then tap again to confirm.</div>
+
+      <div class="parent-game-list">
+        <div class="parent-game-row">
+          <span class="parent-game-label">Word Builder 🔤</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'builder')">Reset</button>
+        </div>
+        <div class="parent-game-row">
+          <span class="parent-game-label">Sight Word Spotter 👁️</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'spotter')">Reset</button>
+        </div>
+        <div class="parent-game-row">
+          <span class="parent-game-label">Word Decoder 🔍</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'decoder')">Reset</button>
+        </div>
+        <div class="parent-game-row">
+          <span class="parent-game-label">Sentence Builder 📖</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'sentence')">Reset</button>
+        </div>
+        <div class="parent-game-row">
+          <span class="parent-game-label">Word Families 🎵</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'families')">Reset</button>
+        </div>
+        <div class="parent-game-row">
+          <span class="parent-game-label">Story Reader 📚</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'reader')">Reset</button>
+        </div>
+        <div class="parent-game-row">
+          <span class="parent-game-label">Typing Practice ⌨️</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'typing')">Reset</button>
+        </div>
+      </div>
+
+      <div class="parent-divider"></div>
+
+      <button class="parent-reset-all-btn" onclick="resetGame(this,'all')">Reset All Progress</button>
+      <button class="parent-close-btn" onclick="closeParentSettings()">✕ Close</button>
+    </div>
+  </div>
 
   <!-- ===== SCRIPTS (load order matters) =====
   -->
