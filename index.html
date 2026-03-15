@@ -147,13 +147,103 @@
 
     .start-btn:active { transform: scale(0.96); }
 
-    /* ===================== GAME SCREEN ===================== */
+    /* ===================== HUB SCREEN ===================== */
+    .hub-top {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .hub-sticker-badge {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: var(--accent);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 800;
+      border-radius: 20px;
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+
+    .hub-companion {
+      font-size: 4rem;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .hub-greeting {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .hub-game-btn {
+      width: 100%;
+      background: white;
+      border: 3px solid var(--tile-border);
+      border-radius: 22px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 80px;
+      margin-bottom: 14px;
+      text-align: left;
+      gap: 6px;
+    }
+
+    .hub-game-btn:active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      transform: scale(0.98);
+    }
+
+    .hub-game-btn-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .hub-game-btn-sub {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    /* ===================== GAME SCREEN (Word Builder) ===================== */
     .game-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
       margin-bottom: 10px;
+    }
+
+    .back-btn {
+      background: none;
+      border: 2px solid var(--tile-border);
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .back-btn:active {
+      background: var(--primary-light);
+      color: var(--primary);
+      transform: scale(0.96);
     }
 
     .mascot {
@@ -446,6 +536,318 @@
 
     .play-again-btn:active { transform: scale(0.96); }
 
+    /* ===================== SIGHT WORD SPOTTER ===================== */
+    .spotter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+
+    .spotter-flash-card {
+      width: 100%;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      margin-bottom: 16px;
+      animation: clueIn 0.3s ease;
+    }
+
+    .spotter-flash-word {
+      font-size: 3rem;
+      font-weight: 900;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .timer-bar-wrap {
+      width: 100%;
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .timer-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--success), #34d399);
+      border-radius: 5px;
+      transition: width linear;
+    }
+
+    .spotter-choose-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .spotter-choices {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .spotter-choice-btn {
+      width: 100%;
+      background: white;
+      border: 3px solid var(--tile-border);
+      border-radius: 20px;
+      padding: 22px 16px;
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.12s ease;
+      min-height: 80px;
+      text-align: center;
+    }
+
+    .spotter-choice-btn:active {
+      transform: scale(0.97);
+    }
+
+    .spotter-choice-btn.wrong-shake {
+      animation: cardShake 0.4s ease;
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    @keyframes cardShake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-10px); }
+      40%      { transform: translateX(10px); }
+      60%      { transform: translateX(-7px); }
+      80%      { transform: translateX(7px); }
+    }
+
+    /* Flash card color palette */
+    .flash-color-0 { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+    .flash-color-1 { background: linear-gradient(135deg, #10b981, #34d399); }
+    .flash-color-2 { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+    .flash-color-3 { background: linear-gradient(135deg, #ef4444, #f87171); }
+    .flash-color-4 { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+    .flash-color-5 { background: linear-gradient(135deg, #ec4899, #f472b6); }
+
+    /* ===================== STORY MOMENT OVERLAY ===================== */
+    .story-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(20, 10, 40, 0.88);
+      backdrop-filter: blur(6px);
+      z-index: 150;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .story-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .story-header {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fbbf24;
+      margin-bottom: 10px;
+    }
+
+    .story-companion {
+      font-size: 3.5rem;
+      margin-bottom: 14px;
+      animation: popIn 0.4s ease;
+    }
+
+    .story-scene {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+    }
+
+    .story-sentence {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .story-word-span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: white;
+      background: rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .story-word-span.lit {
+      background: #fbbf24;
+      color: #1f2937;
+      transform: scale(1.08);
+    }
+
+    .story-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .story-read-btn {
+      background: #fbbf24;
+      color: #1f2937;
+      border: none;
+      border-radius: 18px;
+      padding: 18px 28px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.12s ease;
+      min-height: 80px;
+    }
+
+    .story-read-btn:active { transform: scale(0.96); }
+
+    .story-keep-btn {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 18px;
+      padding: 18px 28px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.12s ease;
+      min-height: 80px;
+    }
+
+    .story-keep-btn:active { transform: scale(0.96); }
+
+    /* ===================== STICKER BOOK ===================== */
+    .sticker-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .sticker-count {
+      font-size: 1rem;
+      color: var(--text-light);
+      font-weight: 600;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .sticker-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .sticker-slot {
+      aspect-ratio: 1;
+      background: white;
+      border: 2px solid var(--tile-border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      cursor: default;
+      transition: transform 0.12s ease;
+    }
+
+    .sticker-slot.earned {
+      cursor: pointer;
+      border-color: var(--accent);
+      box-shadow: 0 3px 8px rgba(245,158,11,0.25);
+    }
+
+    .sticker-slot.earned:active { transform: scale(0.9); }
+
+    .sticker-slot.locked {
+      filter: grayscale(1);
+      opacity: 0.3;
+    }
+
+    /* New sticker award overlay */
+    .sticker-award-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(4px);
+      z-index: 160;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    .sticker-award-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .sticker-award-emoji {
+      font-size: 7rem;
+      animation: popIn 0.5s ease;
+      margin-bottom: 12px;
+    }
+
+    .sticker-award-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 6px;
+      animation: wordReveal 0.4s ease 0.2s both;
+    }
+
+    .sticker-award-sub {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 28px;
+      animation: wordReveal 0.4s ease 0.35s both;
+    }
+
+    .sticker-ok-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 18px;
+      padding: 18px 48px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      animation: popIn 0.4s ease 0.6s both;
+      transition: transform 0.12s ease;
+    }
+
+    .sticker-ok-btn:active { transform: scale(0.96); }
+
     /* ===================== CONFETTI ===================== */
     .confetti-piece {
       position: fixed;
@@ -501,14 +903,39 @@
       </button>
     </div>
 
-    <button class="start-btn" id="start-btn" onclick="startGame()">
+    <button class="start-btn" id="start-btn" onclick="goToHub()">
       Let's Play! 🎉
     </button>
   </div>
 
-  <!-- ===== GAME SCREEN ===== -->
+  <!-- ===== HUB SCREEN ===== -->
+  <div id="hub-screen" class="screen">
+    <div class="hub-top">
+      <div class="hub-companion" id="hub-companion"></div>
+      <button class="hub-sticker-badge" id="hub-sticker-badge" onclick="goToStickers()">⭐ 0 stickers</button>
+    </div>
+    <div class="hub-greeting" id="hub-greeting">Hi Emma! 👋</div>
+
+    <button class="hub-game-btn" onclick="startWordBuilder()">
+      <div class="hub-game-btn-title">Word Builder 🔤</div>
+      <div class="hub-game-btn-sub" id="hub-wb-sub">0 words spelled</div>
+    </button>
+
+    <button class="hub-game-btn" onclick="startSpotter()">
+      <div class="hub-game-btn-title">Sight Word Spotter 👁️</div>
+      <div class="hub-game-btn-sub" id="hub-sw-sub">0 words learned</div>
+    </button>
+
+    <button class="hub-game-btn" onclick="goToStickers()">
+      <div class="hub-game-btn-title">Sticker Book ⭐</div>
+      <div class="hub-game-btn-sub" id="hub-stk-sub">0 / 30 stickers</div>
+    </button>
+  </div>
+
+  <!-- ===== GAME SCREEN (Word Builder) ===== -->
   <div id="game-screen" class="screen">
     <div class="game-header">
+      <button class="back-btn" onclick="goToHub()">← Hub</button>
       <div class="mascot" id="mascot"></div>
       <div class="score-badge" id="score-badge">⭐ 0</div>
     </div>
@@ -524,14 +951,54 @@
     <div class="tiles-area"  id="tiles-area"></div>
   </div>
 
+  <!-- ===== SIGHT WORD SPOTTER SCREEN ===== -->
+  <div id="spotter-screen" class="screen">
+    <div class="spotter-header">
+      <button class="back-btn" onclick="goToHub()">← Hub</button>
+      <div class="mascot" id="spotter-mascot"></div>
+      <div class="score-badge" id="spotter-score-badge">👁️ 0</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="spotter-progress-fill" style="width:0%"></div>
+    </div>
+
+    <!-- Phase 1: Flash -->
+    <div id="spotter-flash-phase">
+      <div class="spotter-flash-card flash-color-0" id="spotter-flash-card">
+        <div class="spotter-flash-word" id="spotter-flash-word"></div>
+      </div>
+      <div class="timer-bar-wrap">
+        <div class="timer-bar-fill" id="spotter-timer-bar" style="width:100%"></div>
+      </div>
+    </div>
+
+    <!-- Phase 2: Choose -->
+    <div id="spotter-choose-phase" style="display:none; width:100%;">
+      <div class="spotter-choose-label">Which word did you see?</div>
+      <div class="spotter-choices" id="spotter-choices"></div>
+    </div>
+  </div>
+
+  <!-- ===== STICKER BOOK SCREEN ===== -->
+  <div id="sticker-screen" class="screen">
+    <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:12px;">
+      <button class="back-btn" onclick="goToHub()">← Hub</button>
+      <div></div>
+    </div>
+    <div class="sticker-title">Emma's Stickers ⭐</div>
+    <div class="sticker-count" id="sticker-count-label">0 / 30 stickers</div>
+    <div class="sticker-grid" id="sticker-grid"></div>
+  </div>
+
   <!-- ===== ALL DONE SCREEN ===== -->
   <div id="done-screen" class="done-screen">
     <div style="font-size:5rem;margin-bottom:16px">🏆</div>
     <div class="done-title">Amazing, Emma!</div>
-    <div class="done-sub">You spelled every word!</div>
+    <div class="done-sub" id="done-sub-text">You spelled every word!</div>
     <div class="done-score" id="done-score"></div>
-    <div style="font-size:1rem;color:var(--text-light)">words spelled</div>
-    <button class="play-again-btn" onclick="playAgain()">Play Again! 🎉</button>
+    <div style="font-size:1rem;color:var(--text-light)" id="done-score-label">words spelled</div>
+    <button class="play-again-btn" onclick="goToHub()">Back to Games 🎮</button>
   </div>
 
   <!-- ===== CELEBRATION OVERLAY ===== -->
@@ -539,19 +1006,37 @@
     <div class="celebrate-emoji" id="celebrate-emoji"></div>
     <div class="celebrate-word"  id="celebrate-word"></div>
     <div class="celebrate-name"  id="celebrate-name"></div>
-    <button class="next-btn" onclick="nextWord()">Next Word ➜</button>
+    <button class="next-btn" id="celebrate-next-btn" onclick="celebrateNextClicked()">Next Word ➜</button>
+  </div>
+
+  <!-- ===== STORY MOMENT OVERLAY ===== -->
+  <div class="story-overlay" id="story-overlay">
+    <div class="story-header">Story Time! 📖</div>
+    <div class="story-companion" id="story-companion"></div>
+    <div class="story-scene" id="story-scene"></div>
+    <div class="story-sentence" id="story-sentence"></div>
+    <div class="story-buttons">
+      <button class="story-read-btn" onclick="playStorySentence()">Read it with me! 🔊</button>
+      <button class="story-keep-btn" onclick="closeStoryMoment()">Keep playing! ➜</button>
+    </div>
+  </div>
+
+  <!-- ===== STICKER AWARD OVERLAY ===== -->
+  <div class="sticker-award-overlay" id="sticker-award-overlay">
+    <div class="sticker-award-emoji" id="sticker-award-emoji"></div>
+    <div class="sticker-award-title">You earned a sticker!</div>
+    <div class="sticker-award-sub" id="sticker-award-sub"></div>
+    <button class="sticker-ok-btn" onclick="closeStickerAward()">Yay! ⭐</button>
   </div>
 
 
   <script>
     // =====================================================================
-    // WORD DATA
-    // Words are sorted easy → medium → hard so Emma builds confidence first.
-    // Each entry: { word, emoji }
-    // Emojis chosen to be unambiguous for a 4-5 year old.
+    // 1. DATA CONSTANTS
     // =====================================================================
+
+    // Word Builder words — easy → medium → hard
     const WORDS = [
-      // Easy — 3-letter CVC words
       { word: 'cat',   emoji: '🐱' },
       { word: 'dog',   emoji: '🐶' },
       { word: 'pig',   emoji: '🐷' },
@@ -564,7 +1049,6 @@
       { word: 'cup',   emoji: '🥤' },
       { word: 'bed',   emoji: '🛏️' },
       { word: 'nut',   emoji: '🥜' },
-      // Medium — 4-letter words
       { word: 'frog',  emoji: '🐸' },
       { word: 'fish',  emoji: '🐟' },
       { word: 'duck',  emoji: '🦆' },
@@ -574,7 +1058,6 @@
       { word: 'ship',  emoji: '🚢' },
       { word: 'star',  emoji: '⭐' },
       { word: 'flag',  emoji: '🚩' },
-      // Hard — 5-letter words (blends and clusters)
       { word: 'snail', emoji: '🐌' },
       { word: 'shark', emoji: '🦈' },
       { word: 'skunk', emoji: '🦨' },
@@ -582,35 +1065,65 @@
       { word: 'plant', emoji: '🪴' },
     ];
 
-    // Letters used as distractors (never include 'x','q','z' — confusing at this age)
+    // 20 Dolch Pre-Primer sight words
+    const SIGHT_WORDS = ['the','a','and','is','it','in','on','I','see','look','can','go','my','we','he','she','to','up','run','big'];
+
+    // Story moments — triggered every 5 total words across all games
+    const STORY_MOMENTS = [
+      { sentence: 'Cat sat. Cat napped.',        scene: '🐱😴' },
+      { sentence: 'The big dog ran!',             scene: '🐶💨' },
+      { sentence: 'A frog sat on a log.',         scene: '🐸🪵' },
+      { sentence: 'I see a red bug.',             scene: '🐛❤️' },
+      { sentence: 'The duck can swim!',           scene: '🦆💦' },
+      { sentence: 'Look! A fish in the sea!',     scene: '🐟🌊' },
+      { sentence: 'We can run and jump and play!',scene: '🌟'   },
+      { sentence: 'I can read! I can read!',      scene: '📖✨' },
+    ];
+
+    // 30 animal stickers (in order of award)
+    const STICKERS = ['🐱','🐶','🐷','🐸','🦊','🐰','🐔','🦇','🐛','🐌','🦈','🦨','🐟','🦆','🐦','🦀','🐮','🦁','🐯','🐺','🦋','🐝','🐢','🦎','🐙','🦑','🐬','🐘','🦒','🦓'];
+
+    // Sticker animal names (for TTS)
+    const STICKER_NAMES = ['cat','dog','pig','frog','fox','bunny','hen','bat','caterpillar','snail','shark','skunk','fish','duck','bird','crab','cow','lion','tiger','wolf','butterfly','bee','turtle','lizard','octopus','squid','dolphin','elephant','giraffe','zebra'];
+
+    // Letters used as distractors (never include x, q, z — confusing at this age)
     const DISTRACTOR_POOL = 'bdfghjklmnprstvw'.split('');
 
-    // =====================================================================
-    // GAME STATE
-    // =====================================================================
-    const state = {
-      companion: { emoji: '', name: '' },
-      wordList:  [],            // ordered word list for this session
-      currentIndex: 0,
-      currentWord:  null,
-      activeSlot:   0,          // which slot is waiting for input
-      score:        0,
-      isAnimating:  false,
-      roundComplete: false,
-    };
+    // Flash card colors for spotter (cycles through)
+    const FLASH_COLORS = ['flash-color-0','flash-color-1','flash-color-2','flash-color-3','flash-color-4','flash-color-5'];
 
     // =====================================================================
-    // AUDIO — Web Speech API with best-voice selection
-    //
-    // Browsers expose multiple TTS voices. We pick the best available:
-    //   Google US English  (Chrome desktop — very clear)
-    //   Microsoft Neural voices (Edge/Windows — very clear)
-    //   Samantha / Karen   (iOS Safari / macOS — clear)
-    //   Any en-US voice    (fallback)
-    //   Any English voice  (last resort)
-    //
-    // Voices load asynchronously, so we listen for voiceschanged and also
-    // try immediately in case they're already cached (Chrome behaviour).
+    // 2. SAVE / LOAD
+    // =====================================================================
+    const SAVE_KEY = 'emmaSave';
+
+    const DEFAULT_SAVE = {
+      companion: '',
+      companionName: '',
+      totalWordsSpelled: 0,
+      totalSightWords: 0,
+      stickersEarned: [],
+      storyMomentIndex: 0,
+      sightWordsLearned: [],
+    };
+
+    function loadSave() {
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (raw) return Object.assign({}, DEFAULT_SAVE, JSON.parse(raw));
+      } catch(e) {}
+      return Object.assign({}, DEFAULT_SAVE);
+    }
+
+    function writeSave(patch) {
+      const current = loadSave();
+      const updated = Object.assign(current, patch);
+      try { localStorage.setItem(SAVE_KEY, JSON.stringify(updated)); } catch(e) {}
+      return updated;
+    }
+
+    // =====================================================================
+    // 3. AUDIO — Web Speech API with best-voice selection (unchanged from v1)
     // =====================================================================
     let selectedVoice = null;
 
@@ -618,7 +1131,6 @@
       const voices = window.speechSynthesis.getVoices();
       if (!voices.length) return;
 
-      // Ordered preference list — first match wins
       const tests = [
         v => v.name === 'Google US English',
         v => v.name.includes('Microsoft') && v.name.toLowerCase().includes('aria'),
@@ -638,26 +1150,17 @@
         if (match) { selectedVoice = match; return; }
       }
 
-      selectedVoice = voices[0]; // absolute fallback
+      selectedVoice = voices[0];
     }
 
     if (window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = loadBestVoice;
-      loadBestVoice(); // works in Chrome where voices are synchronously available
+      loadBestVoice();
     }
 
-    function speakWord(word) {
-      // Slower rate so every syllable is clear for a young listener
-      speak(word, 0.65, 1.05);
-    }
-
-    function speakLetter(letter) {
-      speak(letter, 0.9, 1.1);
-    }
-
-    function speakPhrase(phrase) {
-      speak(phrase, 0.78, 1.1);
-    }
+    function speakWord(word)   { speak(word, 0.65, 1.05); }
+    function speakLetter(letter) { speak(letter, 0.9, 1.1); }
+    function speakPhrase(phrase) { speak(phrase, 0.78, 1.1); }
 
     function speak(text, rate, pitch) {
       if (!window.speechSynthesis) return;
@@ -671,18 +1174,59 @@
     }
 
     // =====================================================================
-    // WELCOME SCREEN
+    // 4. GAME STATE (declared early so all functions can reference it)
     // =====================================================================
+
+    // Game state object
+    const state = {
+      companion: { emoji: '', name: '' },
+      wordList:  [],
+      currentIndex: 0,
+      currentWord:  null,
+      activeSlot:   0,
+      score:        0,
+      isAnimating:  false,
+      roundComplete: false,
+      pendingStoryMoment: false,
+      // Which game is active: 'builder' | 'spotter'
+      activeGame: 'builder',
+    };
+
+    // =====================================================================
+    // 5. WELCOME SCREEN
+    // =====================================================================
+
     function selectCompanion(btn, emoji, name) {
       document.querySelectorAll('.companion-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       state.companion = { emoji, name };
-      const startBtn = document.getElementById('start-btn');
-      startBtn.classList.add('visible');
+      document.getElementById('start-btn').classList.add('visible');
     }
 
-    function startGame() {
-      // Build word list: shuffle within each difficulty tier
+    function goToHub() {
+      // Save companion choice
+      writeSave({ companion: state.companion.emoji, companionName: state.companion.name });
+      refreshHubUI();
+      showScreen('hub-screen');
+    }
+
+    // =====================================================================
+    // 6. HUB SCREEN
+    // =====================================================================
+    function refreshHubUI() {
+      const save = loadSave();
+      document.getElementById('hub-companion').textContent = state.companion.emoji || save.companion || '🐰';
+      document.getElementById('hub-sticker-badge').textContent = `⭐ ${save.stickersEarned.length} stickers`;
+      document.getElementById('hub-wb-sub').textContent = `${save.totalWordsSpelled} word${save.totalWordsSpelled !== 1 ? 's' : ''} spelled`;
+      document.getElementById('hub-sw-sub').textContent = `${save.totalSightWords} word${save.totalSightWords !== 1 ? 's' : ''} learned`;
+      document.getElementById('hub-stk-sub').textContent = `${save.stickersEarned.length} / 30 stickers`;
+    }
+
+    // =====================================================================
+    // 7. WORD BUILDER (existing logic, slightly modified)
+    // =====================================================================
+
+    function startWordBuilder() {
       const easy   = shuffle(WORDS.filter(w => w.word.length === 3));
       const medium = shuffle(WORDS.filter(w => w.word.length === 4));
       const hard   = shuffle(WORDS.filter(w => w.word.length >= 5));
@@ -690,51 +1234,45 @@
       state.currentIndex = 0;
       state.score = 0;
       state.roundComplete = false;
+      state.pendingStoryMoment = false;
+      state.activeGame = 'builder';
 
       document.getElementById('mascot').textContent = state.companion.emoji;
       showScreen('game-screen');
       loadWord();
     }
 
-    function playAgain() {
-      showScreen('welcome-screen');
-      // Reset companion selection so she can pick again
-      document.querySelectorAll('.companion-btn').forEach(b => b.classList.remove('selected'));
-      document.getElementById('start-btn').classList.remove('visible');
-    }
-
-    // =====================================================================
-    // GAME LOOP
-    // =====================================================================
     function loadWord() {
       if (state.currentIndex >= state.wordList.length) {
-        showAllDone();
+        showAllDone('builder');
         return;
+      }
+
+      // Check if a story moment is pending — show it before loading next word
+      if (state.pendingStoryMoment) {
+        state.pendingStoryMoment = false;
+        showStoryMoment();
+        return; // story moment's close button will call loadWord() again
       }
 
       state.currentWord  = state.wordList[state.currentIndex];
       state.activeSlot   = 0;
       state.isAnimating  = false;
 
-      // Update progress bar (based on index through all words)
       const pct = (state.currentIndex / state.wordList.length) * 100;
       document.getElementById('progress-fill').style.width = pct + '%';
-
-      // Update score display
       document.getElementById('score-badge').textContent = `⭐ ${state.score}`;
 
-      // Emoji clue — reset animation so it plays fresh each word
       const clueEl = document.getElementById('emoji-clue');
       clueEl.textContent = state.currentWord.emoji;
       clueEl.style.animation = 'none';
-      void clueEl.offsetWidth; // force reflow
+      void clueEl.offsetWidth;
       clueEl.style.animation = '';
 
       renderSlots();
       renderTiles();
     }
 
-    // Build the empty letter slots
     function renderSlots() {
       const container = document.getElementById('word-slots');
       const word = state.currentWord.word;
@@ -749,12 +1287,10 @@
       }
     }
 
-    // Build the shuffled letter tiles (correct letters + distractors)
     function renderTiles() {
       const word    = state.currentWord.word;
       const letters = word.split('');
 
-      // Pick distractors — letters not already in the word
       const distCount  = word.length <= 3 ? 2 : 3;
       const available  = DISTRACTOR_POOL.filter(l => !letters.includes(l));
       const distractors = shuffle(available).slice(0, distCount);
@@ -774,9 +1310,6 @@
       });
     }
 
-    // =====================================================================
-    // TILE TAP — main interaction
-    // =====================================================================
     function handleTileTap(tileEl, letter) {
       if (state.isAnimating) return;
       if (tileEl.classList.contains('used')) return;
@@ -784,7 +1317,6 @@
       const expectedLetter = state.currentWord.word[state.activeSlot];
 
       if (letter === expectedLetter) {
-        // ✅ Correct
         speakLetter(letter);
         tileEl.classList.add('used');
 
@@ -796,36 +1328,35 @@
         state.activeSlot++;
 
         if (state.activeSlot < state.currentWord.word.length) {
-          // Activate the next slot
           document.getElementById(`slot-${state.activeSlot}`).classList.add('active');
           triggerMascot('happy');
         } else {
-          // Word complete!
           wordComplete();
         }
-
       } else {
-        // ❌ Wrong — gentle bounce, no penalty
         tileEl.classList.add('wrong');
         triggerMascot('wrong');
         setTimeout(() => tileEl.classList.remove('wrong'), 380);
       }
     }
 
-    // Tap the emoji to hear the word as a hint
     function hintTap() {
       if (state.currentWord) speakWord(state.currentWord.word);
     }
 
-    // =====================================================================
-    // WORD COMPLETE
-    // =====================================================================
     function wordComplete() {
       state.isAnimating = true;
       state.score++;
+
+      // Update persistent total
+      const save = loadSave();
+      writeSave({ totalWordsSpelled: save.totalWordsSpelled + 1 });
+
       triggerMascot('happy');
 
-      // Short pause → speak the word → show celebration
+      // Check if a story moment should be queued (checks AFTER this word is counted)
+      checkMilestones();
+
       setTimeout(() => {
         speakWord(state.currentWord.word);
         setTimeout(() => showCelebration(), 700);
@@ -838,45 +1369,363 @@
       document.getElementById('celebrate-name').textContent  = 'Emma got it! ⭐';
       document.getElementById('score-badge').textContent = `⭐ ${state.score}`;
 
+      // Update next button label based on whether story is pending
+      const btn = document.getElementById('celebrate-next-btn');
+      btn.textContent = state.pendingStoryMoment ? 'Story Time! 📖' : 'Next Word ➜';
+
       document.getElementById('celebrate-overlay').classList.add('show');
       triggerMascot('happy');
       launchConfetti();
 
-      // Speak the celebration phrase after a beat
       setTimeout(() => {
         speakPhrase(`${state.currentWord.word}! Amazing, Emma!`);
       }, 600);
     }
 
-    function nextWord() {
+    // Called when the "Next Word" / "Story Time" button is tapped on the celebrate overlay
+    function celebrateNextClicked() {
       document.getElementById('celebrate-overlay').classList.remove('show');
       state.currentIndex++;
+      // loadWord will check pendingStoryMoment before loading the next word
       loadWord();
     }
 
-    function showAllDone() {
-      document.getElementById('done-score').textContent = state.score;
-      showScreen(null); // hide all screens
+    function showAllDone(game) {
+      const save = loadSave();
+      const scoreNum = game === 'builder' ? state.score : spotterState.score;
+      const label = game === 'builder' ? 'words spelled' : 'sight words learned!';
+      const sub = game === 'builder' ? 'You spelled every word!' : `You learned ${scoreNum} sight words!`;
+
+      document.getElementById('done-score').textContent = scoreNum;
+      document.getElementById('done-score-label').textContent = label;
+      document.getElementById('done-sub-text').textContent = sub;
+
+      showScreen(null);
       document.getElementById('done-screen').classList.add('active');
       launchConfetti();
-      launchConfetti(); // double confetti for the big finish!
-      setTimeout(() => speakPhrase(`Amazing Emma! You spelled ${state.score} words! You are so smart!`), 800);
+      launchConfetti();
+      setTimeout(() => speakPhrase(`Amazing Emma! You are so smart!`), 800);
     }
 
     // =====================================================================
-    // MASCOT REACTIONS
+    // 7. SIGHT WORD SPOTTER
     // =====================================================================
+    const spotterState = {
+      wordList: [],
+      currentIndex: 0,
+      currentWord: '',
+      score: 0,
+      timerTimeout: null,
+      colorIndex: 0,
+      pendingStoryMoment: false,
+    };
+
+    function startSpotter() {
+      const save = loadSave();
+      // Shuffle words, put unseen ones first
+      const unseen = SIGHT_WORDS.filter(w => !save.sightWordsLearned.includes(w));
+      const seen   = SIGHT_WORDS.filter(w =>  save.sightWordsLearned.includes(w));
+      spotterState.wordList = [...shuffle(unseen), ...shuffle(seen)];
+      spotterState.currentIndex = 0;
+      spotterState.score = 0;
+      spotterState.colorIndex = 0;
+      spotterState.pendingStoryMoment = false;
+      state.activeGame = 'spotter';
+
+      document.getElementById('spotter-mascot').textContent = state.companion.emoji || loadSave().companion || '🐰';
+      showScreen('spotter-screen');
+      loadSpotterWord();
+    }
+
+    function loadSpotterWord() {
+      if (spotterState.currentIndex >= spotterState.wordList.length) {
+        showAllDone('spotter');
+        return;
+      }
+
+      // Check pending story moment before loading next word
+      if (spotterState.pendingStoryMoment) {
+        spotterState.pendingStoryMoment = false;
+        showStoryMoment();
+        return;
+      }
+
+      const word = spotterState.wordList[spotterState.currentIndex];
+      spotterState.currentWord = word;
+
+      // Update progress
+      const pct = (spotterState.currentIndex / spotterState.wordList.length) * 100;
+      document.getElementById('spotter-progress-fill').style.width = pct + '%';
+      document.getElementById('spotter-score-badge').textContent = `👁️ ${spotterState.score}`;
+
+      // Show flash phase
+      showSpotterFlash(word);
+    }
+
+    function showSpotterFlash(word) {
+      // Show flash card
+      document.getElementById('spotter-flash-phase').style.display = 'block';
+      document.getElementById('spotter-choose-phase').style.display = 'none';
+
+      // Cycle flash card color
+      const card = document.getElementById('spotter-flash-card');
+      FLASH_COLORS.forEach(c => card.classList.remove(c));
+      card.classList.add(FLASH_COLORS[spotterState.colorIndex % FLASH_COLORS.length]);
+      spotterState.colorIndex++;
+
+      document.getElementById('spotter-flash-word').textContent = word;
+
+      // Speak word immediately
+      speakWord(word);
+
+      // Start timer bar — drains over 1800ms
+      const timerBar = document.getElementById('spotter-timer-bar');
+      timerBar.style.transition = 'none';
+      timerBar.style.width = '100%';
+      void timerBar.offsetWidth; // force reflow
+      timerBar.style.transition = 'width 1.8s linear';
+      timerBar.style.width = '0%';
+
+      // After 1800ms, move to choose phase
+      if (spotterState.timerTimeout) clearTimeout(spotterState.timerTimeout);
+      spotterState.timerTimeout = setTimeout(() => {
+        showSpotterChoose();
+      }, 1800);
+    }
+
+    function showSpotterChoose() {
+      document.getElementById('spotter-flash-phase').style.display = 'none';
+      document.getElementById('spotter-choose-phase').style.display = 'block';
+
+      const correct = spotterState.currentWord;
+
+      // Pick 2 distractors from sight words (not the correct word)
+      const others = SIGHT_WORDS.filter(w => w !== correct);
+      const distractors = shuffle(others).slice(0, 2);
+
+      const choices = shuffle([correct, ...distractors]);
+      const container = document.getElementById('spotter-choices');
+      container.innerHTML = '';
+
+      choices.forEach(word => {
+        const btn = document.createElement('button');
+        btn.className = 'spotter-choice-btn';
+        btn.textContent = word;
+        btn.onclick = () => handleSpotterChoice(btn, word, correct);
+        container.appendChild(btn);
+      });
+    }
+
+    function handleSpotterChoice(btn, chosen, correct) {
+      if (chosen === correct) {
+        // Correct!
+        spotterState.score++;
+        triggerMascotEl('spotter-mascot', 'happy');
+
+        // Update save data
+        const save = loadSave();
+        const newLearned = save.sightWordsLearned.includes(correct)
+          ? save.sightWordsLearned
+          : [...save.sightWordsLearned, correct];
+        writeSave({ totalSightWords: save.totalSightWords + 1, sightWordsLearned: newLearned });
+
+        // Check milestones
+        checkMilestones();
+
+        speakPhrase(`That says ${correct}! Great, Emma!`);
+        launchConfetti();
+
+        setTimeout(() => {
+          spotterState.currentIndex++;
+          loadSpotterWord();
+        }, 1400);
+
+      } else {
+        // Wrong — shake and try again
+        btn.classList.add('wrong-shake');
+        triggerMascotEl('spotter-mascot', 'wrong');
+        setTimeout(() => btn.classList.remove('wrong-shake'), 420);
+      }
+    }
+
+    // =====================================================================
+    // 8. STORY MOMENTS
+    // =====================================================================
+
+    // storyResumeCallback is called after the story overlay closes, to
+    // resume whichever game was in progress
+    let storyResumeCallback = null;
+
+    function checkMilestones() {
+      const save = loadSave();
+      const total = save.totalWordsSpelled + save.totalSightWords;
+      const storyDue = Math.floor(total / 5) > save.storyMomentIndex && save.storyMomentIndex < STORY_MOMENTS.length;
+
+      if (storyDue) {
+        // Queue the story moment for the active game
+        if (state.activeGame === 'builder') {
+          state.pendingStoryMoment = true;
+        } else {
+          spotterState.pendingStoryMoment = true;
+        }
+      }
+    }
+
+    function showStoryMoment() {
+      const save = loadSave();
+      const idx = save.storyMomentIndex;
+      if (idx >= STORY_MOMENTS.length) {
+        // No more stories — resume game
+        resumeAfterStory();
+        return;
+      }
+
+      const moment = STORY_MOMENTS[idx];
+      const companion = state.companion.emoji || save.companion || '🐰';
+
+      document.getElementById('story-companion').textContent = companion;
+      document.getElementById('story-scene').textContent = moment.scene;
+
+      // Build word spans
+      const sentenceEl = document.getElementById('story-sentence');
+      sentenceEl.innerHTML = '';
+      const words = moment.sentence.split(' ');
+      words.forEach((w, i) => {
+        const span = document.createElement('span');
+        span.className = 'story-word-span';
+        span.textContent = w;
+        span.dataset.index = i;
+        // Tapping a word speaks it in isolation (strip punctuation for TTS)
+        span.onclick = () => speakWord(w.replace(/[^a-zA-Z']/g, ''));
+        sentenceEl.appendChild(span);
+      });
+
+      // Update story moment index in save
+      writeSave({ storyMomentIndex: idx + 1 });
+
+      document.getElementById('story-overlay').classList.add('show');
+
+      // Auto-play the sentence after a short delay
+      setTimeout(() => playStorySentence(), 700);
+    }
+
+    function playStorySentence() {
+      const save = loadSave();
+      // storyMomentIndex was already incremented when we opened the overlay,
+      // so current story is at index - 1
+      const idx = save.storyMomentIndex - 1;
+      if (idx < 0 || idx >= STORY_MOMENTS.length) return;
+
+      const moment = STORY_MOMENTS[idx];
+      const words = moment.sentence.split(' ');
+      const spans = document.querySelectorAll('#story-sentence .story-word-span');
+
+      // Clear all highlights first
+      spans.forEach(s => s.classList.remove('lit'));
+
+      // Speak the full sentence
+      speakPhrase(moment.sentence);
+
+      // Highlight words one by one at ~600ms per word
+      words.forEach((w, i) => {
+        setTimeout(() => {
+          spans.forEach(s => s.classList.remove('lit'));
+          if (spans[i]) spans[i].classList.add('lit');
+        }, i * 600);
+      });
+
+      // Clear last highlight after sentence finishes
+      setTimeout(() => {
+        spans.forEach(s => s.classList.remove('lit'));
+      }, words.length * 600 + 400);
+    }
+
+    function closeStoryMoment() {
+      document.getElementById('story-overlay').classList.remove('show');
+
+      // Award a sticker after story
+      const save = loadSave();
+      const nextStickerIndex = save.stickersEarned.length;
+      if (nextStickerIndex < STICKERS.length) {
+        const newSticker = STICKERS[nextStickerIndex];
+        const newEarned = [...save.stickersEarned, newSticker];
+        writeSave({ stickersEarned: newEarned });
+        showStickerAward(newSticker, STICKER_NAMES[nextStickerIndex]);
+      } else {
+        resumeAfterStory();
+      }
+    }
+
+    function resumeAfterStory() {
+      // Resume the active game
+      if (state.activeGame === 'builder') {
+        loadWord();
+      } else {
+        loadSpotterWord();
+      }
+    }
+
+    // =====================================================================
+    // 9. STICKER BOOK
+    // =====================================================================
+    function goToStickers() {
+      renderStickerGrid();
+      showScreen('sticker-screen');
+    }
+
+    function renderStickerGrid() {
+      const save = loadSave();
+      const earned = save.stickersEarned;
+
+      document.getElementById('sticker-count-label').textContent = `${earned.length} / 30 stickers`;
+
+      const grid = document.getElementById('sticker-grid');
+      grid.innerHTML = '';
+
+      STICKERS.forEach((emoji, i) => {
+        const slot = document.createElement('div');
+        const isEarned = earned.includes(emoji);
+        slot.className = 'sticker-slot' + (isEarned ? ' earned' : ' locked');
+        slot.textContent = emoji;
+        if (isEarned) {
+          slot.onclick = () => speakWord(STICKER_NAMES[i]);
+        }
+        grid.appendChild(slot);
+      });
+    }
+
+    function showStickerAward(emoji, name) {
+      document.getElementById('sticker-award-emoji').textContent = emoji;
+      document.getElementById('sticker-award-sub').textContent = `A ${name} sticker!`;
+      document.getElementById('sticker-award-overlay').classList.add('show');
+      launchConfetti();
+      setTimeout(() => speakPhrase(`You got a ${name} sticker! Yay!`), 500);
+    }
+
+    function closeStickerAward() {
+      document.getElementById('sticker-award-overlay').classList.remove('show');
+      refreshHubUI();
+      resumeAfterStory();
+    }
+
+    // =====================================================================
+    // 10. SHARED UTILITIES
+    // =====================================================================
+
+    // Trigger animation on the main game mascot by ID
     function triggerMascot(emotion) {
-      const el = document.getElementById('mascot');
+      triggerMascotEl('mascot', emotion);
+    }
+
+    function triggerMascotEl(id, emotion) {
+      const el = document.getElementById(id);
+      if (!el) return;
       el.classList.remove('happy', 'wrong');
       void el.offsetWidth;
       el.classList.add(emotion);
       setTimeout(() => el.classList.remove(emotion), 700);
     }
 
-    // =====================================================================
-    // CONFETTI
-    // =====================================================================
     const CONFETTI_COLORS = ['#7c3aed','#f59e0b','#10b981','#ef4444','#3b82f6','#ec4899','#f97316'];
 
     function launchConfetti() {
@@ -899,9 +1748,6 @@
       }
     }
 
-    // =====================================================================
-    // UTILITIES
-    // =====================================================================
     function shuffle(arr) {
       const a = [...arr];
       for (let i = a.length - 1; i > 0; i--) {
@@ -916,6 +1762,24 @@
       document.getElementById('done-screen').classList.remove('active');
       if (id) document.getElementById(id).classList.add('active');
     }
+
+    // =====================================================================
+    // INIT — restore companion from save on page load
+    // =====================================================================
+    (function init() {
+      const save = loadSave();
+      if (save.companion) {
+        state.companion = { emoji: save.companion, name: save.companionName };
+        // Pre-select the saved companion button on the welcome screen
+        document.querySelectorAll('.companion-btn').forEach(btn => {
+          const emojiEl = btn.querySelector('.companion-emoji');
+          if (emojiEl && emojiEl.textContent === save.companion) {
+            btn.classList.add('selected');
+            document.getElementById('start-btn').classList.add('visible');
+          }
+        });
+      }
+    })();
   </script>
 
 </body>
