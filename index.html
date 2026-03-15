@@ -873,6 +873,197 @@
       from { transform: scale(0.4) rotate(-8deg); opacity: 0; }
       to   { transform: scale(1) rotate(0); opacity: 1; }
     }
+
+    /* ===================== WORD DECODER ===================== */
+    .decoder-tiles-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .decoder-tile {
+      position: relative;
+      width: 64px;
+      height: 72px;
+      cursor: pointer;
+      perspective: 400px;
+    }
+
+    .decoder-tile.sm {
+      width: 54px;
+      height: 64px;
+    }
+
+    .decoder-tile-inner {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.32s ease;
+      border-radius: 14px;
+    }
+
+    .decoder-tile.flipped .decoder-tile-inner {
+      transform: rotateY(180deg);
+    }
+
+    .decoder-tile-front,
+    .decoder-tile-back {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-size: 1.7rem;
+      font-weight: 900;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .decoder-tile-front {
+      background: var(--primary-light);
+      border: 3px solid var(--tile-border);
+      color: var(--primary);
+    }
+
+    .decoder-tile.active-tile .decoder-tile-front {
+      background: var(--slot-active-bg);
+      border-color: var(--slot-active-border);
+      animation: tileGlow 1s ease infinite alternate;
+    }
+
+    @keyframes tileGlow {
+      from { box-shadow: 0 0 0 rgba(251,191,36,0); }
+      to   { box-shadow: 0 0 14px rgba(251,191,36,0.6); }
+    }
+
+    .decoder-tile-back {
+      background: var(--primary);
+      border: 3px solid var(--primary);
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    .decoder-done-btn {
+      background: var(--success);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 20px 48px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      animation: popIn 0.4s ease;
+      transition: transform 0.12s ease;
+      min-height: 80px;
+      width: 100%;
+    }
+
+    .decoder-done-btn:active { transform: scale(0.96); }
+
+    /* ===================== SENTENCE BUILDER ===================== */
+    .sentence-display {
+      background: white;
+      border: 3px solid var(--tile-border);
+      border-radius: 22px;
+      padding: 22px 20px;
+      width: 100%;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      min-height: 90px;
+      animation: clueIn 0.3s ease;
+    }
+
+    .sentence-word {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .sentence-blank-emoji {
+      font-size: 2.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: var(--slot-active-bg);
+      border: 3px dashed var(--slot-active-border);
+      border-radius: 14px;
+      animation: tileGlow 1s ease infinite alternate;
+    }
+
+    .sentence-filled-word {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--success);
+      background: #d1fae5;
+      border-radius: 10px;
+      padding: 4px 12px;
+      animation: popIn 0.35s ease;
+    }
+
+    .sentence-choices {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .sentence-choice-btn {
+      width: 100%;
+      background: white;
+      border: 3px solid var(--tile-border);
+      border-radius: 20px;
+      padding: 22px 16px;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.12s ease;
+      min-height: 80px;
+      text-align: center;
+    }
+
+    .sentence-choice-btn:active { transform: scale(0.97); }
+
+    .sentence-choice-btn.correct-flash {
+      background: #d1fae5;
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .sentence-choice-btn.wrong-shake {
+      animation: cardShake 0.4s ease;
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .sentence-next-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 20px 48px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.12s ease;
+      min-height: 80px;
+      width: 100%;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .sentence-next-btn.show { display: block; animation: popIn 0.4s ease; }
+    .sentence-next-btn:active { transform: scale(0.96); }
   </style>
 </head>
 <body>
@@ -924,6 +1115,16 @@
     <button class="hub-game-btn" onclick="startSpotter()">
       <div class="hub-game-btn-title">Sight Word Spotter 👁️</div>
       <div class="hub-game-btn-sub" id="hub-sw-sub">0 words learned</div>
+    </button>
+
+    <button class="hub-game-btn" onclick="startDecoder()">
+      <div class="hub-game-btn-title">Word Decoder 🔍</div>
+      <div class="hub-game-btn-sub" id="hub-dc-sub">0 words decoded</div>
+    </button>
+
+    <button class="hub-game-btn" onclick="startSentenceBuilder()">
+      <div class="hub-game-btn-title">Sentence Builder 📖</div>
+      <div class="hub-game-btn-sub" id="hub-sb-sub">0 sentences built</div>
     </button>
 
     <button class="hub-game-btn" onclick="goToStickers()">
@@ -1027,6 +1228,43 @@
     <div class="sticker-award-title">You earned a sticker!</div>
     <div class="sticker-award-sub" id="sticker-award-sub"></div>
     <button class="sticker-ok-btn" onclick="closeStickerAward()">Yay! ⭐</button>
+  </div>
+
+  <!-- ===== WORD DECODER SCREEN ===== -->
+  <div id="decoder-screen" class="screen">
+    <div class="game-header">
+      <button class="back-btn" onclick="goToHub()">← Hub</button>
+      <div class="mascot" id="decoder-mascot"></div>
+      <div class="score-badge" id="decoder-score-badge">🔍 0</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="decoder-progress-fill" style="width:0%"></div>
+    </div>
+
+    <div class="hint-label">Tap each tile to reveal the letters!</div>
+    <div class="emoji-clue" id="decoder-emoji-clue" onclick="decoderHintTap()"></div>
+
+    <div class="decoder-tiles-row" id="decoder-tiles-row"></div>
+    <button class="decoder-done-btn" id="decoder-done-btn" style="display:none" onclick="decoderNextClicked()">Next Word ➜</button>
+  </div>
+
+  <!-- ===== SENTENCE BUILDER SCREEN ===== -->
+  <div id="sentence-screen" class="screen">
+    <div class="game-header">
+      <button class="back-btn" onclick="goToHub()">← Hub</button>
+      <div class="mascot" id="sentence-mascot"></div>
+      <div class="score-badge" id="sentence-score-badge">📖 0</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="sentence-progress-fill" style="width:0%"></div>
+    </div>
+
+    <div class="hint-label">Find the missing word!</div>
+    <div class="sentence-display" id="sentence-display"></div>
+    <div class="sentence-choices" id="sentence-choices"></div>
+    <button class="sentence-next-btn" id="sentence-next-btn" onclick="sentenceNextClicked()">Next Sentence ➜</button>
   </div>
 
 
@@ -1144,6 +1382,8 @@
       companionName: '',
       totalWordsSpelled: 0,
       totalSightWords: 0,
+      totalDecoded: 0,
+      totalSentences: 0,
       stickersEarned: [],
       storyMomentIndex: 0,
       sightWordsLearned: [],
@@ -1230,7 +1470,7 @@
       isAnimating:  false,
       roundComplete: false,
       pendingStoryMoment: false,
-      // Which game is active: 'builder' | 'spotter'
+      // Which game is active: 'builder' | 'spotter' | 'decoder' | 'sentence'
       activeGame: 'builder',
     };
 
@@ -1266,6 +1506,10 @@
       document.getElementById('hub-sticker-badge').textContent = `⭐ ${save.stickersEarned.length} stickers`;
       document.getElementById('hub-wb-sub').textContent = `${save.totalWordsSpelled} word${save.totalWordsSpelled !== 1 ? 's' : ''} spelled`;
       document.getElementById('hub-sw-sub').textContent = `${save.totalSightWords} word${save.totalSightWords !== 1 ? 's' : ''} learned`;
+      const dc = save.totalDecoded || 0;
+      document.getElementById('hub-dc-sub').textContent = `${dc} word${dc !== 1 ? 's' : ''} decoded`;
+      const sb = save.totalSentences || 0;
+      document.getElementById('hub-sb-sub').textContent = `${sb} sentence${sb !== 1 ? 's' : ''} built`;
       document.getElementById('hub-stk-sub').textContent = `${save.stickersEarned.length} / 30 stickers`;
     }
 
@@ -1441,9 +1685,24 @@
 
     function showAllDone(game) {
       const save = loadSave();
-      const scoreNum = game === 'builder' ? state.score : spotterState.score;
-      const label = game === 'builder' ? 'words spelled' : 'sight words learned!';
-      const sub = game === 'builder' ? 'You spelled every word!' : `You learned ${scoreNum} sight words!`;
+      let scoreNum, label, sub;
+      if (game === 'builder') {
+        scoreNum = state.score;
+        label = 'words spelled';
+        sub = 'You spelled every word!';
+      } else if (game === 'spotter') {
+        scoreNum = spotterState.score;
+        label = 'sight words learned!';
+        sub = `You learned ${scoreNum} sight words!`;
+      } else if (game === 'decoder') {
+        scoreNum = decoderState.score;
+        label = 'words decoded!';
+        sub = `You decoded ${scoreNum} words!`;
+      } else {
+        scoreNum = sentenceState.score;
+        label = 'sentences built!';
+        sub = `You built ${scoreNum} sentences!`;
+      }
 
       document.getElementById('done-score').textContent = scoreNum;
       document.getElementById('done-score-label').textContent = label;
@@ -1608,15 +1867,19 @@
 
     function checkMilestones() {
       const save = loadSave();
-      const total = save.totalWordsSpelled + save.totalSightWords;
+      const total = save.totalWordsSpelled + save.totalSightWords + (save.totalDecoded || 0) + (save.totalSentences || 0);
       const storyDue = Math.floor(total / 5) > save.storyMomentIndex && save.storyMomentIndex < STORY_MOMENTS.length;
 
       if (storyDue) {
         // Queue the story moment for the active game
         if (state.activeGame === 'builder') {
           state.pendingStoryMoment = true;
-        } else {
+        } else if (state.activeGame === 'spotter') {
           spotterState.pendingStoryMoment = true;
+        } else if (state.activeGame === 'decoder') {
+          decoderState.pendingStoryMoment = true;
+        } else if (state.activeGame === 'sentence') {
+          sentenceState.pendingStoryMoment = true;
         }
       }
     }
@@ -1717,8 +1980,12 @@
       // Resume the active game
       if (state.activeGame === 'builder') {
         loadWord();
-      } else {
+      } else if (state.activeGame === 'spotter') {
         loadSpotterWord();
+      } else if (state.activeGame === 'decoder') {
+        loadDecoderWord();
+      } else if (state.activeGame === 'sentence') {
+        loadSentence();
       }
     }
 
@@ -1818,6 +2085,328 @@
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById('done-screen').classList.remove('active');
       if (id) document.getElementById(id).classList.add('active');
+    }
+
+    // =====================================================================
+    // 11. WORD DECODER
+    // =====================================================================
+
+    const decoderState = {
+      wordList: [],
+      currentIndex: 0,
+      currentWord: null,
+      revealedCount: 0,
+      score: 0,
+      pendingStoryMoment: false,
+    };
+
+    function startDecoder() {
+      const easy   = shuffle(WORDS.filter(w => w.word.length === 3));
+      const medium = shuffle(WORDS.filter(w => w.word.length === 4));
+      const hard   = shuffle(WORDS.filter(w => w.word.length >= 5));
+      decoderState.wordList = [...easy, ...medium, ...hard];
+      decoderState.currentIndex = 0;
+      decoderState.score = 0;
+      decoderState.pendingStoryMoment = false;
+      state.activeGame = 'decoder';
+
+      document.getElementById('decoder-mascot').textContent = state.companion.emoji || loadSave().companion || '🐰';
+      showScreen('decoder-screen');
+      loadDecoderWord();
+    }
+
+    function loadDecoderWord() {
+      if (decoderState.currentIndex >= decoderState.wordList.length) {
+        showAllDone('decoder');
+        return;
+      }
+      if (decoderState.pendingStoryMoment) {
+        decoderState.pendingStoryMoment = false;
+        showStoryMoment();
+        return;
+      }
+
+      decoderState.currentWord = decoderState.wordList[decoderState.currentIndex];
+      decoderState.revealedCount = 0;
+
+      const pct = (decoderState.currentIndex / decoderState.wordList.length) * 100;
+      document.getElementById('decoder-progress-fill').style.width = pct + '%';
+      document.getElementById('decoder-score-badge').textContent = `🔍 ${decoderState.score}`;
+
+      const clueEl = document.getElementById('decoder-emoji-clue');
+      clueEl.textContent = decoderState.currentWord.emoji;
+      clueEl.style.animation = 'none';
+      void clueEl.offsetWidth;
+      clueEl.style.animation = '';
+
+      document.getElementById('decoder-done-btn').style.display = 'none';
+      renderDecoderTiles();
+    }
+
+    function renderDecoderTiles() {
+      const word = decoderState.currentWord.word;
+      const isLong = word.length >= 5;
+      const container = document.getElementById('decoder-tiles-row');
+      container.innerHTML = '';
+
+      for (let i = 0; i < word.length; i++) {
+        const tile = document.createElement('div');
+        tile.className = 'decoder-tile' + (isLong ? ' sm' : '') + (i === 0 ? ' active-tile' : '');
+        tile.id = `dtile-${i}`;
+        tile.onclick = () => handleDecoderTap(i);
+
+        const inner = document.createElement('div');
+        inner.className = 'decoder-tile-inner';
+
+        const front = document.createElement('div');
+        front.className = 'decoder-tile-front';
+        front.textContent = '?';
+
+        const back = document.createElement('div');
+        back.className = 'decoder-tile-back';
+        back.textContent = word[i];
+
+        inner.appendChild(front);
+        inner.appendChild(back);
+        tile.appendChild(inner);
+        container.appendChild(tile);
+      }
+    }
+
+    function handleDecoderTap(index) {
+      // Only allow tapping the next unrevealed tile (left-to-right)
+      if (index !== decoderState.revealedCount) return;
+
+      const tile = document.getElementById(`dtile-${index}`);
+      if (!tile || tile.classList.contains('flipped')) return;
+
+      tile.classList.add('flipped');
+      tile.classList.remove('active-tile');
+      speakLetter(decoderState.currentWord.word[index]);
+
+      decoderState.revealedCount++;
+
+      if (decoderState.revealedCount < decoderState.currentWord.word.length) {
+        // Activate the next tile
+        const next = document.getElementById(`dtile-${decoderState.revealedCount}`);
+        if (next) next.classList.add('active-tile');
+      } else {
+        // All letters revealed
+        decoderWordComplete();
+      }
+    }
+
+    function decoderWordComplete() {
+      decoderState.score++;
+      const save = loadSave();
+      writeSave({ totalDecoded: (save.totalDecoded || 0) + 1 });
+
+      triggerMascotEl('decoder-mascot', 'happy');
+      checkMilestones();
+
+      setTimeout(() => {
+        speakWord(decoderState.currentWord.word);
+        setTimeout(() => {
+          launchConfetti();
+          speakPhrase(`${decoderState.currentWord.word}! Amazing Emma!`);
+          document.getElementById('decoder-score-badge').textContent = `🔍 ${decoderState.score}`;
+          const doneBtn = document.getElementById('decoder-done-btn');
+          doneBtn.style.display = 'block';
+          doneBtn.textContent = decoderState.pendingStoryMoment ? 'Story Time! 📖' : 'Next Word ➜';
+        }, 500);
+      }, 350);
+    }
+
+    function decoderHintTap() {
+      if (decoderState.currentWord) speakWord(decoderState.currentWord.word);
+    }
+
+    function decoderNextClicked() {
+      document.getElementById('decoder-done-btn').style.display = 'none';
+      decoderState.currentIndex++;
+      loadDecoderWord();
+    }
+
+    // =====================================================================
+    // 12. SENTENCE BUILDER
+    // =====================================================================
+
+    // 18 sentences — blank word has emoji shown in-place as the clue
+    const SENTENCES = [
+      { sentence: 'The ___ sat on the mat.',      blank: 'cat',   emoji: '🐱' },
+      { sentence: 'I see a big ___.',              blank: 'dog',   emoji: '🐶' },
+      { sentence: 'The ___ went in the mud.',      blank: 'pig',   emoji: '🐷' },
+      { sentence: 'The ___ is up in the sky.',     blank: 'sun',   emoji: '☀️' },
+      { sentence: 'A ___ is on my head.',          blank: 'hat',   emoji: '🎩' },
+      { sentence: 'The ___ sat on a log.',         blank: 'frog',  emoji: '🐸' },
+      { sentence: 'I can see a ___.',              blank: 'fish',  emoji: '🐟' },
+      { sentence: 'The ___ can swim fast.',        blank: 'duck',  emoji: '🦆' },
+      { sentence: 'Look at the big ___.',          blank: 'bear',  emoji: '🐻' },
+      { sentence: 'I see a ___ in the sky.',       blank: 'bird',  emoji: '🐦' },
+      { sentence: 'I can see the ___.',            blank: 'moon',  emoji: '🌙' },
+      { sentence: 'The ___ is so bright!',         blank: 'star',  emoji: '⭐' },
+      { sentence: 'Look at the big ___.',          blank: 'shark', emoji: '🦈' },
+      { sentence: 'The ___ runs so fast.',         blank: 'horse', emoji: '🐎' },
+      { sentence: 'A ___ likes to sleep.',         blank: 'sloth', emoji: '🦥' },
+      { sentence: 'I see a ___ on a leaf.',        blank: 'snail', emoji: '🐌' },
+      { sentence: 'The ___ is black and white.',   blank: 'panda', emoji: '🐼' },
+      { sentence: 'Look at the big ___!',          blank: 'tiger', emoji: '🐯' },
+    ];
+
+    const sentenceState = {
+      sentenceList: [],
+      currentIndex: 0,
+      current: null,
+      score: 0,
+      answered: false,
+      pendingStoryMoment: false,
+    };
+
+    function startSentenceBuilder() {
+      sentenceState.sentenceList = shuffle([...SENTENCES]);
+      sentenceState.currentIndex = 0;
+      sentenceState.score = 0;
+      sentenceState.answered = false;
+      sentenceState.pendingStoryMoment = false;
+      state.activeGame = 'sentence';
+
+      document.getElementById('sentence-mascot').textContent = state.companion.emoji || loadSave().companion || '🐰';
+      showScreen('sentence-screen');
+      loadSentence();
+    }
+
+    function loadSentence() {
+      if (sentenceState.currentIndex >= sentenceState.sentenceList.length) {
+        showAllDone('sentence');
+        return;
+      }
+      if (sentenceState.pendingStoryMoment) {
+        sentenceState.pendingStoryMoment = false;
+        showStoryMoment();
+        return;
+      }
+
+      sentenceState.current = sentenceState.sentenceList[sentenceState.currentIndex];
+      sentenceState.answered = false;
+
+      const pct = (sentenceState.currentIndex / sentenceState.sentenceList.length) * 100;
+      document.getElementById('sentence-progress-fill').style.width = pct + '%';
+      document.getElementById('sentence-score-badge').textContent = `📖 ${sentenceState.score}`;
+
+      document.getElementById('sentence-next-btn').classList.remove('show');
+      renderSentenceDisplay(false);
+      renderSentenceChoices();
+    }
+
+    function renderSentenceDisplay(solved) {
+      const { sentence, blank, emoji } = sentenceState.current;
+      const parts = sentence.split('___');
+      const container = document.getElementById('sentence-display');
+      container.innerHTML = '';
+
+      // Words before the blank
+      parts[0].trim().split(' ').forEach(word => {
+        if (!word) return;
+        const span = document.createElement('span');
+        span.className = 'sentence-word';
+        span.textContent = word;
+        container.appendChild(span);
+      });
+
+      // The blank — show emoji if unsolved, filled word if solved
+      if (solved) {
+        const filled = document.createElement('span');
+        filled.className = 'sentence-filled-word';
+        filled.textContent = blank;
+        container.appendChild(filled);
+      } else {
+        const blankEl = document.createElement('span');
+        blankEl.className = 'sentence-blank-emoji';
+        blankEl.textContent = emoji;
+        container.appendChild(blankEl);
+      }
+
+      // Words after the blank
+      if (parts[1]) {
+        parts[1].trim().split(' ').forEach(word => {
+          if (!word) return;
+          const span = document.createElement('span');
+          span.className = 'sentence-word';
+          span.textContent = word;
+          container.appendChild(span);
+        });
+      }
+    }
+
+    function renderSentenceChoices() {
+      const correct = sentenceState.current.blank;
+      const correctLen = correct.length;
+
+      // Prefer same-length distractors so choices look plausible
+      const sameLen = shuffle(WORDS.filter(w => w.word.length === correctLen && w.word !== correct));
+      const diffLen = shuffle(WORDS.filter(w => w.word !== correct && w.word.length !== correctLen));
+      const pool = [...sameLen, ...diffLen];
+      const distractors = pool.slice(0, 2).map(w => w.word);
+
+      const choices = shuffle([correct, ...distractors]);
+      const container = document.getElementById('sentence-choices');
+      container.innerHTML = '';
+
+      choices.forEach(word => {
+        const btn = document.createElement('button');
+        btn.className = 'sentence-choice-btn';
+        btn.textContent = word;
+        btn.onclick = () => handleSentenceChoice(btn, word, correct);
+        container.appendChild(btn);
+      });
+    }
+
+    function handleSentenceChoice(btn, chosen, correct) {
+      if (sentenceState.answered) return;
+
+      if (chosen === correct) {
+        sentenceState.answered = true;
+        sentenceState.score++;
+
+        const save = loadSave();
+        writeSave({ totalSentences: (save.totalSentences || 0) + 1 });
+
+        // Lock all buttons; highlight correct one
+        document.querySelectorAll('.sentence-choice-btn').forEach(b => {
+          b.onclick = null;
+          if (b.textContent === correct) b.classList.add('correct-flash');
+        });
+
+        triggerMascotEl('sentence-mascot', 'happy');
+        checkMilestones();
+
+        // Swap emoji blank for the real word
+        renderSentenceDisplay(true);
+
+        // Speak the full sentence, then show Next button
+        setTimeout(() => {
+          const fullSentence = sentenceState.current.sentence.replace('___', correct);
+          speakPhrase(fullSentence);
+          setTimeout(() => {
+            launchConfetti();
+            document.getElementById('sentence-score-badge').textContent = `📖 ${sentenceState.score}`;
+            const nextBtn = document.getElementById('sentence-next-btn');
+            nextBtn.textContent = sentenceState.pendingStoryMoment ? 'Story Time! 📖' : 'Next Sentence ➜';
+            nextBtn.classList.add('show');
+          }, 800);
+        }, 400);
+
+      } else {
+        btn.classList.add('wrong-shake');
+        triggerMascotEl('sentence-mascot', 'wrong');
+        setTimeout(() => btn.classList.remove('wrong-shake'), 420);
+      }
+    }
+
+    function sentenceNextClicked() {
+      document.getElementById('sentence-next-btn').classList.remove('show');
+      sentenceState.currentIndex++;
+      loadSentence();
     }
 
     // =====================================================================
