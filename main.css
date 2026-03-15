@@ -203,6 +203,129 @@ body {
   font-weight: 600;
 }
 
+/* ===================== LEARNING PATH CARDS ============================= */
+.path-card {
+  width: 100%;
+  background: white;
+  border: 3px solid var(--tile-border);
+  border-left: 6px solid var(--path-accent, var(--primary));
+  border-radius: 22px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 80px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.path-card:active {
+  border-color: var(--path-accent, var(--primary));
+  background: #f5f3ff;
+  transform: scale(0.98);
+}
+
+.path-card.coming-soon {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.path-card-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.path-card-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.path-card-name {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.path-card-sub {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+.path-card-arrow {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--path-accent, var(--primary));
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.path-card-lock {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+/* ===================== PATH SCREEN ===================================== */
+.path-screen-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.path-screen-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.path-screen-games {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.path-game-btn {
+  width: 100%;
+  background: white;
+  border: 3px solid var(--tile-border);
+  border-radius: 22px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 80px;
+  margin-bottom: 14px;
+  text-align: left;
+  gap: 6px;
+}
+
+.path-game-btn:active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  transform: scale(0.98);
+}
+
+.path-game-btn-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.path-game-btn-sub {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
 /* ===================== GAME SCREEN (Word Builder) ===================== */
 .game-header {
   display: flex;

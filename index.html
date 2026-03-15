@@ -57,45 +57,59 @@
     <button class="hub-settings-btn" onclick="showParentSettings()" title="Parent Settings">⚙️</button>
     <div class="hub-greeting" id="hub-greeting">Hi Emma! 👋</div>
 
-    <button class="hub-game-btn" onclick="startWordBuilder()">
-      <div class="hub-game-btn-title">Word Builder 🔤</div>
-      <div class="hub-game-btn-sub" id="hub-wb-sub">0 words spelled</div>
+    <button class="path-card" onclick="openPath('explorer')" style="--path-accent:#f59e0b">
+      <div class="path-card-emoji">🗺️</div>
+      <div class="path-card-text">
+        <div class="path-card-name">Word Explorer</div>
+        <div class="path-card-sub" id="pc-explorer-sub">Start exploring!</div>
+      </div>
+      <div class="path-card-arrow">›</div>
     </button>
 
-    <button class="hub-game-btn" onclick="startSpotter()">
-      <div class="hub-game-btn-title">Sight Word Spotter 👁️</div>
-      <div class="hub-game-btn-sub" id="hub-sw-sub">0 words learned</div>
+    <button class="path-card" onclick="openPath('storytime')" style="--path-accent:#14b8a6">
+      <div class="path-card-emoji">📖</div>
+      <div class="path-card-text">
+        <div class="path-card-name">Story Time</div>
+        <div class="path-card-sub" id="pc-storytime-sub">Start reading!</div>
+      </div>
+      <div class="path-card-arrow">›</div>
     </button>
 
-    <button class="hub-game-btn" onclick="startDecoder()">
-      <div class="hub-game-btn-title">Word Decoder 🔍</div>
-      <div class="hub-game-btn-sub" id="hub-dc-sub">0 words decoded</div>
+    <button class="path-card" onclick="openPath('maker')" style="--path-accent:#ec4899">
+      <div class="path-card-emoji">✏️</div>
+      <div class="path-card-text">
+        <div class="path-card-name">Word Maker</div>
+        <div class="path-card-sub" id="pc-maker-sub">Start making words!</div>
+      </div>
+      <div class="path-card-arrow">›</div>
     </button>
 
-    <button class="hub-game-btn" onclick="startSentenceBuilder()">
-      <div class="hub-game-btn-title">Sentence Builder 📖</div>
-      <div class="hub-game-btn-sub" id="hub-sb-sub">0 sentences built</div>
+    <button class="path-card coming-soon" onclick="showComingSoon()" style="--path-accent:#94a3b8">
+      <div class="path-card-emoji">🔢</div>
+      <div class="path-card-text">
+        <div class="path-card-name">Numbers Quest</div>
+        <div class="path-card-sub">Coming soon!</div>
+      </div>
+      <div class="path-card-lock">🔒</div>
     </button>
 
-    <button class="hub-game-btn" onclick="startWordFamilies()">
-      <div class="hub-game-btn-title">Word Families 🎵</div>
-      <div class="hub-game-btn-sub" id="hub-fam-sub">0 families completed</div>
+    <button class="path-card coming-soon" onclick="showComingSoon()" style="--path-accent:#94a3b8">
+      <div class="path-card-emoji">🎵</div>
+      <div class="path-card-text">
+        <div class="path-card-name">Music Studio</div>
+        <div class="path-card-sub">Coming soon!</div>
+      </div>
+      <div class="path-card-lock">🔒</div>
     </button>
+  </div>
 
-    <button class="hub-game-btn" onclick="startReader()">
-      <div class="hub-game-btn-title">Story Reader 📚</div>
-      <div class="hub-game-btn-sub" id="hub-rdr-sub">0 stories read</div>
-    </button>
-
-    <button class="hub-game-btn" onclick="startTyping()">
-      <div class="hub-game-btn-title">Typing Practice ⌨️</div>
-      <div class="hub-game-btn-sub" id="hub-typ-sub">0 words typed</div>
-    </button>
-
-    <button class="hub-game-btn" onclick="goToStickers()">
-      <div class="hub-game-btn-title">Sticker Book ⭐</div>
-      <div class="hub-game-btn-sub" id="hub-stk-sub">0 / 30 stickers</div>
-    </button>
+  <!-- ===== PATH SCREEN ===== -->
+  <div id="path-screen" class="screen">
+    <div class="path-screen-header">
+      <button class="back-btn" onclick="closePathScreen()">← Back</button>
+      <div class="path-screen-title" id="path-screen-title">Word Explorer 🗺️</div>
+    </div>
+    <div class="path-screen-games" id="path-screen-games"></div>
   </div>
 
   <!-- ===== GAME SCREEN (Word Builder) ===== -->

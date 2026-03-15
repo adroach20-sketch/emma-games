@@ -100,6 +100,8 @@ const state = {
   pendingStoryMoment: false,
   // Which game is active: 'builder'|'spotter'|'decoder'|'sentence'|'families'|'reader'|'typing'
   activeGame: 'builder',
+  // Which learning path is active (null = came from hub directly)
+  activePath: null,
 };
 
 // ── WELCOME SCREEN ────────────────────────────────────────────────────
@@ -120,8 +122,14 @@ function goToHub() {
   window.speechSynthesis && window.speechSynthesis.cancel();
   // Save companion choice
   writeSave({ companion: state.companion.emoji, companionName: state.companion.name });
-  refreshHubUI();
-  showScreen('hub-screen');
+
+  if (state.activePath) {
+    // Emma came from a path — go back to it (re-render so stats are fresh)
+    openPath(state.activePath);
+  } else {
+    refreshHubUI();
+    showScreen('hub-screen');
+  }
 }
 
 // ── HUB SCREEN ────────────────────────────────────────────────────────
@@ -129,19 +137,11 @@ function refreshHubUI() {
   const save = loadSave();
   document.getElementById('hub-companion').textContent = state.companion.emoji || save.companion || '🐰';
   document.getElementById('hub-sticker-badge').textContent = `⭐ ${save.stickersEarned.length} stickers`;
-  document.getElementById('hub-wb-sub').textContent = `${save.totalWordsSpelled} word${save.totalWordsSpelled !== 1 ? 's' : ''} spelled`;
-  document.getElementById('hub-sw-sub').textContent = `${save.totalSightWords} word${save.totalSightWords !== 1 ? 's' : ''} learned`;
-  const dc = save.totalDecoded || 0;
-  document.getElementById('hub-dc-sub').textContent = `${dc} word${dc !== 1 ? 's' : ''} decoded`;
-  const sb = save.totalSentences || 0;
-  document.getElementById('hub-sb-sub').textContent = `${sb} sentence${sb !== 1 ? 's' : ''} built`;
-  const fam = save.totalFamilies || 0;
-  document.getElementById('hub-fam-sub').textContent = `${fam} famil${fam !== 1 ? 'ies' : 'y'} completed`;
-  const rdr = save.totalStoriesRead || 0;
-  document.getElementById('hub-rdr-sub').textContent = `${rdr} stor${rdr !== 1 ? 'ies' : 'y'} read`;
-  const typ = save.totalTyped || 0;
-  document.getElementById('hub-typ-sub').textContent = `${typ} word${typ !== 1 ? 's' : ''} typed`;
-  document.getElementById('hub-stk-sub').textContent = `${save.stickersEarned.length} / 30 stickers`;
+  // Update each path card's sub-label with aggregated progress
+  Object.entries(PATHS).forEach(([id, path]) => {
+    const el = document.getElementById('pc-' + id + '-sub');
+    if (el) el.textContent = path.pathSub(save);
+  });
 }
 
 // ── ALL DONE SCREEN ───────────────────────────────────────────────────
@@ -438,6 +438,76 @@ function shuffle(arr) {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+// ── LEARNING PATHS ────────────────────────────────────────────────────
+
+const PATHS = {
+  explorer: {
+    name: 'Word Explorer 🗺️',
+    games: [
+      { title: 'Word Builder 🔤',  sub: s => `${s.totalWordsSpelled} word${s.totalWordsSpelled !== 1 ? 's' : ''} spelled`,        fn: 'startWordBuilder'  },
+      { title: 'Word Decoder 🔍',  sub: s => `${s.totalDecoded} word${s.totalDecoded !== 1 ? 's' : ''} decoded`,                  fn: 'startDecoder'      },
+      { title: 'Word Families 🎵', sub: s => `${s.totalFamilies} famil${s.totalFamilies !== 1 ? 'ies' : 'y'} completed`,          fn: 'startWordFamilies' },
+    ],
+    pathSub: s => {
+      const t = (s.totalWordsSpelled || 0) + (s.totalDecoded || 0) + (s.totalFamilies || 0);
+      return t === 0 ? 'Start exploring!' : `${t} words explored`;
+    },
+  },
+  storytime: {
+    name: 'Story Time 📖',
+    games: [
+      { title: 'Sight Word Spotter 👁️', sub: s => `${s.totalSightWords} word${s.totalSightWords !== 1 ? 's' : ''} learned`, fn: 'startSpotter' },
+      { title: 'Story Reader 📚',        sub: s => `${s.totalStoriesRead} stor${s.totalStoriesRead !== 1 ? 'ies' : 'y'} read`, fn: 'startReader'  },
+    ],
+    pathSub: s => {
+      const t = (s.totalSightWords || 0) + (s.totalStoriesRead || 0);
+      return t === 0 ? 'Start reading!' : `${t} words & stories`;
+    },
+  },
+  maker: {
+    name: 'Word Maker ✏️',
+    games: [
+      { title: 'Sentence Builder 📖', sub: s => `${s.totalSentences} sentence${s.totalSentences !== 1 ? 's' : ''} built`, fn: 'startSentenceBuilder' },
+      { title: 'Typing Practice ⌨️',  sub: s => `${s.totalTyped} word${s.totalTyped !== 1 ? 's' : ''} typed`,             fn: 'startTyping'          },
+    ],
+    pathSub: s => {
+      const t = (s.totalSentences || 0) + (s.totalTyped || 0);
+      return t === 0 ? 'Start making words!' : `${t} words created`;
+    },
+  },
+};
+
+function openPath(pathId) {
+  const path = PATHS[pathId];
+  if (!path) return;
+  state.activePath = pathId;
+
+  document.getElementById('path-screen-title').textContent = path.name;
+
+  const save = loadSave();
+  const gamesEl = document.getElementById('path-screen-games');
+  gamesEl.innerHTML = '';
+  path.games.forEach(g => {
+    const btn = document.createElement('button');
+    btn.className = 'path-game-btn';
+    btn.innerHTML = `<div class="path-game-btn-title">${g.title}</div><div class="path-game-btn-sub">${g.sub(save)}</div>`;
+    btn.onclick = () => window[g.fn]();
+    gamesEl.appendChild(btn);
+  });
+
+  showScreen('path-screen');
+}
+
+function closePathScreen() {
+  state.activePath = null;
+  refreshHubUI();
+  showScreen('hub-screen');
+}
+
+function showComingSoon() {
+  speakPhrase('Coming soon! Keep playing to unlock new adventures.');
 }
 
 // ── PARENT SETTINGS ───────────────────────────────────────────────────
