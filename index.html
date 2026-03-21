@@ -282,6 +282,7 @@
 
     <div class="hint-label">Drag to sound it out! 🔉</div>
     <div class="emoji-clue" id="slider-emoji-clue"></div>
+    <button class="phonics-hint-btn" onclick="sliderHintTap()">Hear it! 🔊</button>
 
     <div class="slider-letters-row" id="slider-letters-row"></div>
 
@@ -291,7 +292,10 @@
       </div>
     </div>
 
-    <button class="slider-done-btn" id="slider-done-btn" style="display:none" onclick="sliderNextClicked()">Next Word ➜</button>
+    <div class="slider-btn-row">
+      <button class="slider-try-again-btn" id="slider-try-again-btn" style="display:none" onclick="sliderTryAgain()">Try Again 🔄</button>
+      <button class="slider-done-btn" id="slider-done-btn" style="display:none" onclick="sliderNextClicked()">Next Word ➜</button>
+    </div>
   </div>
 
   <!-- ===== WORD DECODER SCREEN ===== -->

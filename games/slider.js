@@ -160,6 +160,26 @@ function _sliderMoveDrag(clientX) {
   }
 }
 
+function sliderHintTap() {
+  if (!sliderState.currentWord) return;
+  const word = sliderState.currentWord.word;
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  // Speak each letter in sequence, then the full word
+  word.split('').forEach((letter, i) => {
+    setTimeout(() => speakLetter(letter), i * 750);
+  });
+  setTimeout(() => speakWord(word), word.length * 750 + 400);
+}
+
+function sliderTryAgain() {
+  document.getElementById('slider-try-again-btn').style.display = 'none';
+  document.getElementById('slider-done-btn').style.display = 'none';
+  sliderState.lastSpokenIndex = -1;
+  sliderState.dragActive = false;
+  document.querySelectorAll('.slider-letter').forEach(l => l.classList.remove('lit', 'active'));
+  _resetHandle();
+}
+
 function _sliderWordComplete() {
   sliderState.score++;
   const save = loadSave();
@@ -182,6 +202,7 @@ function _sliderWordComplete() {
       launchConfetti();
       speakPhrase(`${sliderState.currentWord.word}! Amazing Emma!`);
       document.getElementById('slider-score-badge').textContent = `🔉 ${sliderState.score}`;
+      document.getElementById('slider-try-again-btn').style.display = 'block';
       const doneBtn = document.getElementById('slider-done-btn');
       doneBtn.style.display = 'block';
       doneBtn.textContent = sliderState.pendingStoryMoment ? 'Story Time! 📖' : 'Next Word ➜';
@@ -191,6 +212,7 @@ function _sliderWordComplete() {
 
 function sliderNextClicked() {
   document.getElementById('slider-done-btn').style.display = 'none';
+  document.getElementById('slider-try-again-btn').style.display = 'none';
   sliderState.currentIndex++;
   loadSliderWord();
 }

@@ -1788,6 +1788,30 @@ body {
   box-shadow: 0 6px 28px rgba(124, 58, 237, 0.6);
 }
 
+.slider-btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.slider-try-again-btn {
+  background: white;
+  color: var(--primary);
+  border: 3px solid var(--tile-border);
+  border-radius: 20px;
+  padding: 16px 48px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  animation: popIn 0.4s ease;
+  transition: transform 0.12s ease;
+  min-height: 72px;
+  width: 100%;
+}
+
+.slider-try-again-btn:active { transform: scale(0.96); }
+
 .slider-done-btn {
   background: var(--success);
   color: white;
