@@ -3,6 +3,10 @@
 // Depends on: data.js, core.js
 // =====================================================================
 
+// Slower speech rates than the global defaults, so letters are clear and unhurried
+function _sliderSpeakLetter(letter) { speak(letter, 0.6, 1.05); }
+function _sliderSpeakWord(word)     { speak(word,   0.55, 1.05); }
+
 const sliderState = {
   wordList: [],
   currentIndex: 0,
@@ -138,7 +142,7 @@ function _sliderMoveDrag(clientX) {
 
   if (letterIndex > sliderState.lastSpokenIndex) {
     // Speak only the leading (most recently entered) letter
-    speakLetter(word[letterIndex]);
+    _sliderSpeakLetter(word[letterIndex]);
 
     // Light up all letters swept so far
     for (let i = 0; i <= letterIndex; i++) {
@@ -170,9 +174,9 @@ function sliderHintTap() {
   window.speechSynthesis && window.speechSynthesis.cancel();
   // Speak each letter in sequence, then the full word
   word.split('').forEach((letter, i) => {
-    setTimeout(() => speakLetter(letter), i * 750);
+    setTimeout(() => _sliderSpeakLetter(letter), i * 1100);
   });
-  setTimeout(() => speakWord(word), word.length * 750 + 400);
+  setTimeout(() => _sliderSpeakWord(word), word.length * 1100 + 600);
 }
 
 function sliderTryAgain() {
@@ -201,7 +205,7 @@ function _sliderWordComplete() {
   checkMilestones();
 
   setTimeout(() => {
-    speakWord(sliderState.currentWord.word);
+    _sliderSpeakWord(sliderState.currentWord.word);
     setTimeout(() => {
       launchConfetti();
       speakPhrase(`${sliderState.currentWord.word}! Amazing Emma!`);
@@ -210,8 +214,8 @@ function _sliderWordComplete() {
       const doneBtn = document.getElementById('slider-done-btn');
       doneBtn.style.display = 'block';
       doneBtn.textContent = sliderState.pendingStoryMoment ? 'Story Time! 📖' : 'Next Word ➜';
-    }, 600);
-  }, 300);
+    }, 900);
+  }, 700);
 }
 
 function sliderNextClicked() {
