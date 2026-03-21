@@ -13,12 +13,15 @@ A browser-based reading and spelling game built for Emma (age 4-5). No apps to i
 | **Word Families** | Taps all words that share the same ending sound (-at, -og, etc.) |
 | **Story Reader** | Reads a short story sentence by sentence with word highlighting, then answers a comprehension question |
 | **Typing Practice** | Types words on an on-screen keyboard, letter by letter |
+| **Sound It Out** | Drags a slider left-to-right under a word; each letter sounds as the handle passes it |
 
 ## Features
 
 - Pick an animal companion (Bunny, Puppy, Fox, Froggy)
 - Letters and words spoken aloud via Web Speech API
 - Phonics hint button in Word Builder ("Sound it out!") speaks each letter
+- Sound It Out slider game: drag to reveal and hear each letter; "Hear it!" hint auto-plays the word; Try Again button to repeat the same word
+- Slower, deliberate TTS rates globally (letters 0.6, words 0.55, phrases 0.7) for better clarity at age 4-5
 - Word Categories filter (Animals / Nature / Home / All) for Builder, Decoder, and Typing
 - 64 words across three difficulty tiers: 3-letter CVC, 4-letter, 5-letter
 - ~52 Dolch Pre-Primer + Primer sight words
@@ -56,7 +59,8 @@ emma-games/
     ├── sentence.js  — Sentence Builder
     ├── families.js  — Word Families
     ├── reader.js    — Story Reader
-    └── typing.js    — Typing Practice
+    ├── typing.js    — Typing Practice
+    └── slider.js    — Sound It Out (drag slider to decode letters)
 ```
 
 ## Deployment (Render)
