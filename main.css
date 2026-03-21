@@ -1828,3 +1828,124 @@ body {
 }
 
 .slider-done-btn:active { transform: scale(0.96); }
+
+/* ===================== HOW MANY? (ADDITION) ===================== */
+
+.addition-prompt {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 8px 0 16px;
+}
+
+.addition-groups {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 130px;
+  margin: 0 auto 12px;
+  transition: gap 0.8s ease;
+}
+
+.addition-groups.merged {
+  gap: 0;
+}
+
+.addition-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  max-width: 140px;
+  transition: transform 0.8s ease;
+}
+
+.addition-groups.merged .addition-group:first-child {
+  transform: translateX(16px);
+}
+
+.addition-groups.merged .addition-group:last-child {
+  transform: translateX(-16px);
+}
+
+.addition-plus {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--primary);
+  transition: opacity 0.4s ease, width 0.4s ease;
+  width: 40px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.addition-groups.merged .addition-plus {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.math-object {
+  font-size: 2.4rem;
+  display: inline-block;
+  animation: mathPop 0.4s ease backwards;
+}
+
+@keyframes mathPop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.addition-equation {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--success);
+  margin: 8px 0;
+  animation: fadeIn 0.4s ease;
+}
+
+.addition-choices {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.addition-choice-btn {
+  width: 84px;
+  height: 84px;
+  border-radius: 22px;
+  border: 3px solid var(--tile-border);
+  background: white;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.addition-choice-btn:active {
+  transform: scale(0.92);
+}
+
+.addition-choice-btn.correct {
+  border-color: var(--success);
+  background: #d1fae5;
+  color: var(--success);
+}
+
+.addition-choice-btn.dimmed {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.addition-choice-btn.wrong-shake {
+  animation: cardShake 0.4s ease;
+  border-color: var(--danger);
+  color: var(--danger);
+}

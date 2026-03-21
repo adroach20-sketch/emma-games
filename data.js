@@ -147,6 +147,52 @@ const WORD_FAMILIES = [
 ];
 
 // Story Reader stories — 6 short 3-sentence illustrated stories
+// ── Math: addition problems organized by tier ─────────────────────────
+// Tier 1: sums to 5 (both numbers 1–4)
+// Tier 2: sums to 10 (dormant for v1, easy to enable later)
+const MATH_PROBLEMS = [
+  // Tier 1: sums to 5
+  { a: 1, b: 1, tier: 1 },
+  { a: 1, b: 2, tier: 1 },
+  { a: 2, b: 1, tier: 1 },
+  { a: 1, b: 3, tier: 1 },
+  { a: 3, b: 1, tier: 1 },
+  { a: 2, b: 2, tier: 1 },
+  { a: 1, b: 4, tier: 1 },
+  { a: 4, b: 1, tier: 1 },
+  { a: 2, b: 3, tier: 1 },
+  { a: 3, b: 2, tier: 1 },
+  // Tier 2: sums 6–10
+  { a: 3, b: 3, tier: 2 },
+  { a: 2, b: 4, tier: 2 },
+  { a: 4, b: 2, tier: 2 },
+  { a: 1, b: 5, tier: 2 },
+  { a: 5, b: 1, tier: 2 },
+  { a: 3, b: 4, tier: 2 },
+  { a: 4, b: 3, tier: 2 },
+  { a: 2, b: 5, tier: 2 },
+  { a: 5, b: 2, tier: 2 },
+  { a: 1, b: 6, tier: 2 },
+  { a: 6, b: 1, tier: 2 },
+  { a: 4, b: 4, tier: 2 },
+  { a: 3, b: 5, tier: 2 },
+  { a: 5, b: 3, tier: 2 },
+  { a: 4, b: 5, tier: 2 },
+  { a: 5, b: 4, tier: 2 },
+  { a: 2, b: 6, tier: 2 },
+  { a: 6, b: 2, tier: 2 },
+  { a: 1, b: 7, tier: 2 },
+  { a: 7, b: 1, tier: 2 },
+  { a: 5, b: 5, tier: 2 },
+  { a: 4, b: 6, tier: 2 },
+  { a: 6, b: 4, tier: 2 },
+  { a: 3, b: 7, tier: 2 },
+  { a: 7, b: 3, tier: 2 },
+];
+
+// Emoji pool for math objects — picked randomly each problem
+const MATH_EMOJIS = ['🍎','🍊','🍋','🍓','🫐','🌸','⭐','🎈','🦋','🐟','🐥','🍀'];
+
 const STORIES = [
   {
     title: 'The Cat and the Hat',

@@ -17,6 +17,7 @@ const DEFAULT_SAVE = {
   totalStoriesRead: 0,
   totalTyped: 0,
   totalSlider: 0,
+  totalMathProblems: 0,
   stickersEarned: [],
   storyMomentIndex: 0,
   sightWordsLearned: [],
@@ -99,7 +100,7 @@ const state = {
   isAnimating:  false,
   roundComplete: false,
   pendingStoryMoment: false,
-  // Which game is active: 'builder'|'spotter'|'decoder'|'sentence'|'families'|'reader'|'typing'
+  // Which game is active: 'builder'|'spotter'|'decoder'|'sentence'|'families'|'reader'|'typing'|'addition'
   activeGame: 'builder',
   // Which learning path is active (null = came from hub directly)
   activePath: null,
@@ -180,6 +181,10 @@ function showAllDone(game) {
     scoreNum = sliderState.score;
     label = 'words sounded out!';
     sub = `You sounded out ${scoreNum} words!`;
+  } else if (game === 'addition') {
+    scoreNum = additionState.score;
+    label = 'problems solved!';
+    sub = `You solved ${scoreNum} addition problems!`;
   } else {
     scoreNum = 0;
     label = '';
@@ -206,7 +211,7 @@ let storyAutoPlayTimeout = null;
 
 function checkMilestones() {
   const save = loadSave();
-  const total = save.totalWordsSpelled + save.totalSightWords + (save.totalDecoded || 0) + (save.totalSentences || 0) + (save.totalFamilies || 0) + (save.totalStoriesRead || 0) + (save.totalTyped || 0) + (save.totalSlider || 0);
+  const total = save.totalWordsSpelled + save.totalSightWords + (save.totalDecoded || 0) + (save.totalSentences || 0) + (save.totalFamilies || 0) + (save.totalStoriesRead || 0) + (save.totalTyped || 0) + (save.totalSlider || 0) + (save.totalMathProblems || 0);
   const storyDue = Math.floor(total / 5) > save.storyMomentIndex && save.storyMomentIndex < STORY_MOMENTS.length;
 
   if (storyDue) {
@@ -227,6 +232,8 @@ function checkMilestones() {
       typingState.pendingStoryMoment = true;
     } else if (state.activeGame === 'slider') {
       sliderState.pendingStoryMoment = true;
+    } else if (state.activeGame === 'addition') {
+      additionState.pendingStoryMoment = true;
     }
   }
 }
@@ -341,6 +348,8 @@ function resumeAfterStory() {
     loadTypingWord();
   } else if (state.activeGame === 'slider') {
     loadSliderWord();
+  } else if (state.activeGame === 'addition') {
+    loadAdditionProblem();
   }
 }
 
@@ -487,6 +496,16 @@ const PATHS = {
       return t === 0 ? 'Start making words!' : `${t} words created`;
     },
   },
+  numbers: {
+    name: 'Numbers Quest 🔢',
+    games: [
+      { title: 'How Many? ➕', sub: s => `${s.totalMathProblems || 0} problem${(s.totalMathProblems || 0) !== 1 ? 's' : ''} solved`, fn: 'startAddition' },
+    ],
+    pathSub: s => {
+      const t = s.totalMathProblems || 0;
+      return t === 0 ? 'Start counting!' : `${t} problems solved`;
+    },
+  },
 };
 
 function openPath(pathId) {
@@ -536,9 +555,11 @@ const GAME_RESET_MAP = {
   reader:   { totalStoriesRead: 0 },
   typing:   { totalTyped: 0 },
   slider:   { totalSlider: 0 },
+  addition: { totalMathProblems: 0 },
   all: {
     totalWordsSpelled: 0, totalSightWords: 0, totalDecoded: 0,
     totalSentences: 0, totalFamilies: 0, totalStoriesRead: 0, totalTyped: 0, totalSlider: 0,
+    totalMathProblems: 0,
     stickersEarned: [], storyMomentIndex: 0, sightWordsLearned: [],
     companion: '', companionName: '',
   },

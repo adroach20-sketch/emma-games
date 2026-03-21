@@ -84,13 +84,13 @@
       <div class="path-card-arrow">›</div>
     </button>
 
-    <button class="path-card coming-soon" onclick="showComingSoon()" style="--path-accent:#94a3b8">
+    <button class="path-card" onclick="openPath('numbers')" style="--path-accent:#3b82f6">
       <div class="path-card-emoji">🔢</div>
       <div class="path-card-text">
         <div class="path-card-name">Numbers Quest</div>
-        <div class="path-card-sub">Coming soon!</div>
+        <div class="path-card-sub" id="pc-numbers-sub">Start counting!</div>
       </div>
-      <div class="path-card-lock">🔒</div>
+      <div class="path-card-arrow">›</div>
     </button>
 
     <button class="path-card coming-soon" onclick="showComingSoon()" style="--path-accent:#94a3b8">
@@ -298,6 +298,31 @@
     </div>
   </div>
 
+  <!-- ===== HOW MANY? (ADDITION) SCREEN ===== -->
+  <div id="addition-screen" class="screen">
+    <div class="game-header">
+      <button class="back-btn" onclick="goToHub()">← Hub</button>
+      <div class="mascot" id="addition-mascot"></div>
+      <div class="score-badge" id="addition-score-badge">➕ 0</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="addition-progress-fill" style="width:0%"></div>
+    </div>
+
+    <div class="addition-prompt" id="addition-prompt">How many?</div>
+
+    <div class="addition-groups" id="addition-groups">
+      <div class="addition-group" id="addition-group-left"></div>
+      <div class="addition-plus">+</div>
+      <div class="addition-group" id="addition-group-right"></div>
+    </div>
+
+    <div class="addition-equation" id="addition-equation"></div>
+
+    <div class="addition-choices" id="addition-choices"></div>
+  </div>
+
   <!-- ===== WORD DECODER SCREEN ===== -->
   <div id="decoder-screen" class="screen">
     <div class="game-header">
@@ -375,6 +400,10 @@
           <span class="parent-game-label">Sound It Out 🔉</span>
           <button class="parent-reset-btn" onclick="resetGame(this,'slider')">Reset</button>
         </div>
+        <div class="parent-game-row">
+          <span class="parent-game-label">How Many? ➕</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'addition')">Reset</button>
+        </div>
       </div>
 
       <div class="parent-divider"></div>
@@ -406,6 +435,7 @@
   <script src="games/reader.js"></script>
   <script src="games/typing.js"></script>
   <script src="games/slider.js"></script>
+  <script src="games/addition.js"></script>
   <script src="init.js"></script>
 
 </body>
