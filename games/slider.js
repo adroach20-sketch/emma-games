@@ -107,8 +107,8 @@ function _attachSliderDragListeners() {
 
 function _sliderStartDrag(clientX) {
   if (!sliderState.currentWord) return;
-  // Don't allow restarting once the word is fully sounded out
-  if (sliderState.lastSpokenIndex >= sliderState.currentWord.word.length - 1) return;
+  // Don't allow dragging once the word is complete (done button showing)
+  if (document.getElementById('slider-done-btn').style.display === 'block') return;
   sliderState.dragActive = true;
   _sliderMoveDrag(clientX);
 }
@@ -152,8 +152,12 @@ function _sliderMoveDrag(clientX) {
     if (activeEl) activeEl.classList.add('active');
 
     sliderState.lastSpokenIndex = letterIndex;
+  }
 
-    if (letterIndex === word.length - 1) {
+  // Complete only when handle is dragged all the way to the right edge
+  if (sliderState.lastSpokenIndex === word.length - 1) {
+    const atEnd = x >= rect.width - handleW - 4; // 4px tolerance for finger imprecision
+    if (atEnd) {
       sliderState.dragActive = false;
       _sliderWordComplete();
     }
