@@ -1,6 +1,6 @@
-# Emma's Word Games
+# Emma's Games
 
-A browser-based reading and spelling game built for Emma (age 4-5). No apps to install — just open a browser.
+A browser-based learning app built for Emma (age 4-5). Reading, spelling, and math — no apps to install, just open a browser.
 
 ## Games
 
@@ -14,6 +14,7 @@ A browser-based reading and spelling game built for Emma (age 4-5). No apps to i
 | **Story Reader** | Reads a short story sentence by sentence with word highlighting, then answers a comprehension question |
 | **Typing Practice** | Types words on an on-screen keyboard, letter by letter |
 | **Sound It Out** | Drags a slider left-to-right under a word; each letter sounds as the handle passes it |
+| **How Many?** | Sees two groups of emoji objects, counts the total, and taps the answer (addition) |
 
 ## Features
 
@@ -27,6 +28,8 @@ A browser-based reading and spelling game built for Emma (age 4-5). No apps to i
 - ~52 Dolch Pre-Primer + Primer sight words
 - 12 word family rime patterns
 - 6 illustrated short stories
+- How Many? addition game: two emoji groups stay separate for counting, merge on correct answer; equation shown as reinforcement
+- 35 math problems across two tiers (tier 1: sums to 5, tier 2: sums to 10 — dormant for now)
 - Story Moments unlock every 5 words completed (across all games)
 - Sticker Book — earn an animal sticker after each story moment
 - Progress saved in localStorage
@@ -49,7 +52,7 @@ Open `index.html` in any browser. No server, no install, no dependencies.
 emma-games/
 ├── index.html       — HTML screens and overlays (shell only)
 ├── main.css         — all CSS
-├── data.js          — WORDS, SIGHT_WORDS, SENTENCES, WORD_FAMILIES, STORIES, constants
+├── data.js          — WORDS, SIGHT_WORDS, SENTENCES, WORD_FAMILIES, STORIES, MATH_PROBLEMS, constants
 ├── core.js          — save/load, TTS, shared state, hub, story moments, stickers
 ├── init.js          — page-load companion restore (runs last)
 └── games/
@@ -60,7 +63,8 @@ emma-games/
     ├── families.js  — Word Families
     ├── reader.js    — Story Reader
     ├── typing.js    — Typing Practice
-    └── slider.js    — Sound It Out (drag slider to decode letters)
+    ├── slider.js    — Sound It Out (drag slider to decode letters)
+    └── addition.js  — How Many? (visual addition with emoji groups)
 ```
 
 ## Deployment (Render)
