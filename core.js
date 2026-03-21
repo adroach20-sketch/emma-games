@@ -72,9 +72,9 @@ if (window.speechSynthesis) {
   loadBestVoice();
 }
 
-function speakWord(word)     { speak(word, 0.65, 1.05); }
-function speakLetter(letter) { speak(letter, 0.9, 1.1); }
-function speakPhrase(phrase) { speak(phrase, 0.78, 1.1); }
+function speakWord(word)     { speak(word,   0.55, 1.05); }
+function speakLetter(letter) { speak(letter, 0.6,  1.05); }
+function speakPhrase(phrase) { speak(phrase, 0.7,  1.05); }
 
 function speak(text, rate, pitch) {
   if (!window.speechSynthesis) return;
