@@ -16,6 +16,7 @@ const DEFAULT_SAVE = {
   totalFamilies: 0,
   totalStoriesRead: 0,
   totalTyped: 0,
+  totalSlider: 0,
   stickersEarned: [],
   storyMomentIndex: 0,
   sightWordsLearned: [],
@@ -175,6 +176,10 @@ function showAllDone(game) {
     scoreNum = typingState.score;
     label = 'words typed!';
     sub = `You typed ${scoreNum} words!`;
+  } else if (game === 'slider') {
+    scoreNum = sliderState.score;
+    label = 'words sounded out!';
+    sub = `You sounded out ${scoreNum} words!`;
   } else {
     scoreNum = 0;
     label = '';
@@ -201,7 +206,7 @@ let storyAutoPlayTimeout = null;
 
 function checkMilestones() {
   const save = loadSave();
-  const total = save.totalWordsSpelled + save.totalSightWords + (save.totalDecoded || 0) + (save.totalSentences || 0) + (save.totalFamilies || 0) + (save.totalStoriesRead || 0) + (save.totalTyped || 0);
+  const total = save.totalWordsSpelled + save.totalSightWords + (save.totalDecoded || 0) + (save.totalSentences || 0) + (save.totalFamilies || 0) + (save.totalStoriesRead || 0) + (save.totalTyped || 0) + (save.totalSlider || 0);
   const storyDue = Math.floor(total / 5) > save.storyMomentIndex && save.storyMomentIndex < STORY_MOMENTS.length;
 
   if (storyDue) {
@@ -220,6 +225,8 @@ function checkMilestones() {
       readerState.pendingStoryMoment = true;
     } else if (state.activeGame === 'typing') {
       typingState.pendingStoryMoment = true;
+    } else if (state.activeGame === 'slider') {
+      sliderState.pendingStoryMoment = true;
     }
   }
 }
@@ -332,6 +339,8 @@ function resumeAfterStory() {
     loadReaderStory();
   } else if (state.activeGame === 'typing') {
     loadTypingWord();
+  } else if (state.activeGame === 'slider') {
+    loadSliderWord();
   }
 }
 
@@ -449,9 +458,10 @@ const PATHS = {
       { title: 'Word Builder 🔤',  sub: s => `${s.totalWordsSpelled} word${s.totalWordsSpelled !== 1 ? 's' : ''} spelled`,        fn: 'startWordBuilder'  },
       { title: 'Word Decoder 🔍',  sub: s => `${s.totalDecoded} word${s.totalDecoded !== 1 ? 's' : ''} decoded`,                  fn: 'startDecoder'      },
       { title: 'Word Families 🎵', sub: s => `${s.totalFamilies} famil${s.totalFamilies !== 1 ? 'ies' : 'y'} completed`,          fn: 'startWordFamilies' },
+      { title: 'Sound It Out 🔉',  sub: s => `${s.totalSlider || 0} word${(s.totalSlider || 0) !== 1 ? 's' : ''} sounded out`,    fn: 'startSlider'       },
     ],
     pathSub: s => {
-      const t = (s.totalWordsSpelled || 0) + (s.totalDecoded || 0) + (s.totalFamilies || 0);
+      const t = (s.totalWordsSpelled || 0) + (s.totalDecoded || 0) + (s.totalFamilies || 0) + (s.totalSlider || 0);
       return t === 0 ? 'Start exploring!' : `${t} words explored`;
     },
   },
@@ -525,9 +535,10 @@ const GAME_RESET_MAP = {
   families: { totalFamilies: 0 },
   reader:   { totalStoriesRead: 0 },
   typing:   { totalTyped: 0 },
+  slider:   { totalSlider: 0 },
   all: {
     totalWordsSpelled: 0, totalSightWords: 0, totalDecoded: 0,
-    totalSentences: 0, totalFamilies: 0, totalStoriesRead: 0, totalTyped: 0,
+    totalSentences: 0, totalFamilies: 0, totalStoriesRead: 0, totalTyped: 0, totalSlider: 0,
     stickersEarned: [], storyMomentIndex: 0, sightWordsLearned: [],
     companion: '', companionName: '',
   },

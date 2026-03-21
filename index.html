@@ -268,6 +268,32 @@
     <button class="sticker-ok-btn" onclick="closeStickerAward()">Yay! ⭐</button>
   </div>
 
+  <!-- ===== SOUND IT OUT (SLIDER) SCREEN ===== -->
+  <div id="slider-screen" class="screen">
+    <div class="game-header">
+      <button class="back-btn" onclick="goToHub()">← Hub</button>
+      <div class="mascot" id="slider-mascot"></div>
+      <div class="score-badge" id="slider-score-badge">🔉 0</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="slider-progress-fill" style="width:0%"></div>
+    </div>
+
+    <div class="hint-label">Drag to sound it out! 🔉</div>
+    <div class="emoji-clue" id="slider-emoji-clue"></div>
+
+    <div class="slider-letters-row" id="slider-letters-row"></div>
+
+    <div class="slider-track-wrap">
+      <div id="slider-track">
+        <div id="slider-handle"></div>
+      </div>
+    </div>
+
+    <button class="slider-done-btn" id="slider-done-btn" style="display:none" onclick="sliderNextClicked()">Next Word ➜</button>
+  </div>
+
   <!-- ===== WORD DECODER SCREEN ===== -->
   <div id="decoder-screen" class="screen">
     <div class="game-header">
@@ -341,6 +367,10 @@
           <span class="parent-game-label">Typing Practice ⌨️</span>
           <button class="parent-reset-btn" onclick="resetGame(this,'typing')">Reset</button>
         </div>
+        <div class="parent-game-row">
+          <span class="parent-game-label">Sound It Out 🔉</span>
+          <button class="parent-reset-btn" onclick="resetGame(this,'slider')">Reset</button>
+        </div>
       </div>
 
       <div class="parent-divider"></div>
@@ -371,6 +401,7 @@
   <script src="games/families.js"></script>
   <script src="games/reader.js"></script>
   <script src="games/typing.js"></script>
+  <script src="games/slider.js"></script>
   <script src="init.js"></script>
 
 </body>
